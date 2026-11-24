@@ -1,0 +1,6755 @@
+{
+  "data_source_note": "Trained on synthetic university utilization data generated via AI_Classroom_Lab_Utilization_System.ipynb (seed=42).",
+  "split_info": {
+    "strategy": "Chronological 80:20 Split by Unique Dates",
+    "total_records": 45072,
+    "unique_dates": 313,
+    "split_date": "2026-04-18",
+    "train_records": 36000,
+    "test_records": 9072,
+    "train_start": "2025-07-01",
+    "train_end": "2026-04-17",
+    "test_start": "2026-04-18",
+    "test_end": "2026-06-30"
+  },
+  "models": {
+    "random_forest": {
+      "name": "Random Forest Regressor",
+      "params": {
+        "n_estimators": 100,
+        "max_depth": 20,
+        "min_samples_leaf": 2,
+        "random_state": 42
+      },
+      "metrics": {
+        "mae": 3.3305,
+        "rmse": 5.9237,
+        "r2": 0.9718,
+        "r2_pct": 97.18,
+        "mean_error": 0.0318,
+        "std_error": 5.9236,
+        "median_abs_error": 0.0,
+        "p95_abs_error": 13.9995
+      }
+    },
+    "xgboost": {
+      "name": "XGBoost Regressor",
+      "params": {
+        "n_estimators": 400,
+        "max_depth": 6,
+        "learning_rate": 0.05,
+        "subsample": 0.8,
+        "colsample_bytree": 0.8,
+        "objective": "reg:squarederror",
+        "random_state": 42
+      },
+      "metrics": {
+        "mae": 3.3057,
+        "rmse": 5.8058,
+        "r2": 0.973,
+        "r2_pct": 97.3,
+        "mean_error": -0.0486,
+        "std_error": 5.8056,
+        "median_abs_error": 0.133,
+        "p95_abs_error": 13.5644
+      }
+    }
+  },
+  "recommendation": {
+    "recommended_model_key": "xgboost",
+    "recommended_model_name": "XGBoost Regressor",
+    "mae_improvement": 0.0248,
+    "rmse_improvement": 0.1179,
+    "r2_improvement": 0.0012
+  },
+  "leakage_audit": {
+    "input_features": [
+      "day_of_week",
+      "room_id",
+      "room_type",
+      "time_slot",
+      "course_id",
+      "department",
+      "capacity",
+      "semester",
+      "scheduled_students",
+      "is_scheduled",
+      "is_holiday",
+      "is_exam_period",
+      "month",
+      "day_of_month",
+      "day_of_year"
+    ],
+    "total_input_features": 15,
+    "categorical_features": [
+      "day_of_week",
+      "room_id",
+      "room_type",
+      "time_slot",
+      "course_id",
+      "department"
+    ],
+    "numerical_features": [
+      "capacity",
+      "semester",
+      "scheduled_students",
+      "is_scheduled",
+      "is_holiday",
+      "is_exam_period",
+      "month",
+      "day_of_month",
+      "day_of_year"
+    ],
+    "checks": [
+      {
+        "feature": "utilization_pct",
+        "present_in_inputs": false,
+        "status": "SAFE: Excluded"
+      },
+      {
+        "feature": "actual_occupancy",
+        "present_in_inputs": false,
+        "status": "SAFE: Excluded"
+      },
+      {
+        "feature": "status",
+        "present_in_inputs": false,
+        "status": "SAFE: Excluded"
+      }
+    ],
+    "passed": true
+  },
+  "feature_importance": [
+    {
+      "feature": "scheduled_students",
+      "rf_importance": 89.82,
+      "xgb_importance": 3.37
+    },
+    {
+      "feature": "course_id",
+      "rf_importance": 0.41,
+      "xgb_importance": 43.35
+    },
+    {
+      "feature": "department",
+      "rf_importance": 0.35,
+      "xgb_importance": 33.4
+    },
+    {
+      "feature": "is_scheduled",
+      "rf_importance": 1.09,
+      "xgb_importance": 13.58
+    },
+    {
+      "feature": "capacity",
+      "rf_importance": 6.7,
+      "xgb_importance": 0.77
+    },
+    {
+      "feature": "room_type",
+      "rf_importance": 0.01,
+      "xgb_importance": 3.4
+    },
+    {
+      "feature": "room_id",
+      "rf_importance": 0.14,
+      "xgb_importance": 1.91
+    },
+    {
+      "feature": "day_of_year",
+      "rf_importance": 0.37,
+      "xgb_importance": 0.02
+    },
+    {
+      "feature": "day_of_month",
+      "rf_importance": 0.33,
+      "xgb_importance": 0.02
+    },
+    {
+      "feature": "time_slot",
+      "rf_importance": 0.24,
+      "xgb_importance": 0.08
+    },
+    {
+      "feature": "day_of_week",
+      "rf_importance": 0.22,
+      "xgb_importance": 0.07
+    },
+    {
+      "feature": "semester",
+      "rf_importance": 0.22,
+      "xgb_importance": 0.01
+    },
+    {
+      "feature": "month",
+      "rf_importance": 0.07,
+      "xgb_importance": 0.01
+    },
+    {
+      "feature": "is_exam_period",
+      "rf_importance": 0.03,
+      "xgb_importance": 0.01
+    },
+    {
+      "feature": "is_holiday",
+      "rf_importance": 0.0,
+      "xgb_importance": 0.0
+    }
+  ],
+  "visualizations": {
+    "scatter_points": [
+      {
+        "actual": 77.14,
+        "rf_pred": 93.92,
+        "xgb_pred": 96.01,
+        "rf_error": -16.78,
+        "xgb_error": -18.87,
+        "date": "2026-04-18"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.01,
+        "rf_error": 0.0,
+        "xgb_error": 0.01,
+        "date": "2026-04-18"
+      },
+      {
+        "actual": 91.43,
+        "rf_pred": 87.07,
+        "xgb_pred": 86.36,
+        "rf_error": 4.36,
+        "xgb_error": 5.07,
+        "date": "2026-04-18"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.0,
+        "rf_error": 0.0,
+        "xgb_error": 0.0,
+        "date": "2026-04-18"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.0,
+        "rf_error": 0.0,
+        "xgb_error": 0.0,
+        "date": "2026-04-18"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.04,
+        "rf_error": 0.0,
+        "xgb_error": 0.04,
+        "date": "2026-04-18"
+      },
+      {
+        "actual": 48.75,
+        "rf_pred": 50.56,
+        "xgb_pred": 47.2,
+        "rf_error": -1.81,
+        "xgb_error": 1.55,
+        "date": "2026-04-18"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.02,
+        "rf_error": 0.0,
+        "xgb_error": 0.02,
+        "date": "2026-04-18"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.01,
+        "rf_error": 0.0,
+        "xgb_error": 0.01,
+        "date": "2026-04-18"
+      },
+      {
+        "actual": 68.0,
+        "rf_pred": 83.63,
+        "xgb_pred": 84.11,
+        "rf_error": -15.63,
+        "xgb_error": -16.11,
+        "date": "2026-04-20"
+      },
+      {
+        "actual": 44.29,
+        "rf_pred": 36.37,
+        "xgb_pred": 37.78,
+        "rf_error": 7.92,
+        "xgb_error": 6.51,
+        "date": "2026-04-20"
+      },
+      {
+        "actual": 82.22,
+        "rf_pred": 89.99,
+        "xgb_pred": 92.86,
+        "rf_error": -7.77,
+        "xgb_error": -10.64,
+        "date": "2026-04-20"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.03,
+        "rf_error": 0.0,
+        "xgb_error": -0.03,
+        "date": "2026-04-20"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.04,
+        "rf_error": 0.0,
+        "xgb_error": -0.04,
+        "date": "2026-04-20"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.02,
+        "rf_error": 0.0,
+        "xgb_error": -0.02,
+        "date": "2026-04-20"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.03,
+        "rf_error": 0.0,
+        "xgb_error": -0.03,
+        "date": "2026-04-20"
+      },
+      {
+        "actual": 97.5,
+        "rf_pred": 83.44,
+        "xgb_pred": 80.34,
+        "rf_error": 14.06,
+        "xgb_error": 17.16,
+        "date": "2026-04-20"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.04,
+        "rf_error": 0.0,
+        "xgb_error": -0.04,
+        "date": "2026-04-20"
+      },
+      {
+        "actual": 38.0,
+        "rf_pred": 31.71,
+        "xgb_pred": 33.23,
+        "rf_error": 6.29,
+        "xgb_error": 4.77,
+        "date": "2026-04-20"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.01,
+        "rf_error": 0.0,
+        "xgb_error": -0.01,
+        "date": "2026-04-21"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.01,
+        "rf_error": 0.0,
+        "xgb_error": -0.01,
+        "date": "2026-04-21"
+      },
+      {
+        "actual": 14.29,
+        "rf_pred": 17.43,
+        "xgb_pred": 17.15,
+        "rf_error": -3.14,
+        "xgb_error": -2.86,
+        "date": "2026-04-21"
+      },
+      {
+        "actual": 91.43,
+        "rf_pred": 93.87,
+        "xgb_pred": 93.09,
+        "rf_error": -2.44,
+        "xgb_error": -1.66,
+        "date": "2026-04-21"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.0,
+        "rf_error": 0.0,
+        "xgb_error": 0.0,
+        "date": "2026-04-21"
+      },
+      {
+        "actual": 73.33,
+        "rf_pred": 75.68,
+        "xgb_pred": 74.3,
+        "rf_error": -2.35,
+        "xgb_error": -0.97,
+        "date": "2026-04-21"
+      },
+      {
+        "actual": 80.0,
+        "rf_pred": 80.5,
+        "xgb_pred": 80.97,
+        "rf_error": -0.5,
+        "xgb_error": -0.97,
+        "date": "2026-04-21"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.05,
+        "rf_error": 0.0,
+        "xgb_error": -0.05,
+        "date": "2026-04-21"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.04,
+        "rf_error": 0.0,
+        "xgb_error": -0.04,
+        "date": "2026-04-21"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.02,
+        "rf_error": 0.0,
+        "xgb_error": 0.02,
+        "date": "2026-04-21"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.06,
+        "rf_error": 0.0,
+        "xgb_error": -0.06,
+        "date": "2026-04-22"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.06,
+        "rf_error": 0.0,
+        "xgb_error": -0.06,
+        "date": "2026-04-22"
+      },
+      {
+        "actual": 82.5,
+        "rf_pred": 86.39,
+        "xgb_pred": 85.96,
+        "rf_error": -3.89,
+        "xgb_error": -3.46,
+        "date": "2026-04-22"
+      },
+      {
+        "actual": 57.78,
+        "rf_pred": 65.43,
+        "xgb_pred": 67.58,
+        "rf_error": -7.65,
+        "xgb_error": -9.8,
+        "date": "2026-04-22"
+      },
+      {
+        "actual": 65.71,
+        "rf_pred": 55.13,
+        "xgb_pred": 57.11,
+        "rf_error": 10.58,
+        "xgb_error": 8.6,
+        "date": "2026-04-22"
+      },
+      {
+        "actual": 72.0,
+        "rf_pred": 74.22,
+        "xgb_pred": 74.21,
+        "rf_error": -2.22,
+        "xgb_error": -2.21,
+        "date": "2026-04-22"
+      },
+      {
+        "actual": 28.33,
+        "rf_pred": 24.87,
+        "xgb_pred": 24.25,
+        "rf_error": 3.46,
+        "xgb_error": 4.08,
+        "date": "2026-04-22"
+      },
+      {
+        "actual": 65.0,
+        "rf_pred": 76.06,
+        "xgb_pred": 77.25,
+        "rf_error": -11.06,
+        "xgb_error": -12.25,
+        "date": "2026-04-22"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.07,
+        "rf_error": 0.0,
+        "xgb_error": -0.07,
+        "date": "2026-04-22"
+      },
+      {
+        "actual": 70.0,
+        "rf_pred": 60.51,
+        "xgb_pred": 59.56,
+        "rf_error": 9.49,
+        "xgb_error": 10.44,
+        "date": "2026-04-22"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.03,
+        "rf_error": 0.0,
+        "xgb_error": 0.03,
+        "date": "2026-04-23"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.02,
+        "rf_error": 0.0,
+        "xgb_error": 0.02,
+        "date": "2026-04-23"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.02,
+        "rf_error": 0.0,
+        "xgb_error": 0.02,
+        "date": "2026-04-23"
+      },
+      {
+        "actual": 70.0,
+        "rf_pred": 73.09,
+        "xgb_pred": 71.66,
+        "rf_error": -3.09,
+        "xgb_error": -1.66,
+        "date": "2026-04-23"
+      },
+      {
+        "actual": 40.0,
+        "rf_pred": 43.88,
+        "xgb_pred": 43.3,
+        "rf_error": -3.88,
+        "xgb_error": -3.3,
+        "date": "2026-04-23"
+      },
+      {
+        "actual": 76.25,
+        "rf_pred": 63.01,
+        "xgb_pred": 63.96,
+        "rf_error": 13.24,
+        "xgb_error": 12.29,
+        "date": "2026-04-23"
+      },
+      {
+        "actual": 13.0,
+        "rf_pred": 13.27,
+        "xgb_pred": 13.21,
+        "rf_error": -0.27,
+        "xgb_error": -0.21,
+        "date": "2026-04-23"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.03,
+        "rf_error": 0.0,
+        "xgb_error": 0.03,
+        "date": "2026-04-23"
+      },
+      {
+        "actual": 83.33,
+        "rf_pred": 69.14,
+        "xgb_pred": 71.41,
+        "rf_error": 14.19,
+        "xgb_error": 11.92,
+        "date": "2026-04-23"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.01,
+        "rf_error": 0.0,
+        "xgb_error": 0.01,
+        "date": "2026-04-24"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.01,
+        "rf_error": 0.0,
+        "xgb_error": 0.01,
+        "date": "2026-04-24"
+      },
+      {
+        "actual": 71.43,
+        "rf_pred": 67.53,
+        "xgb_pred": 65.08,
+        "rf_error": 3.9,
+        "xgb_error": 6.35,
+        "date": "2026-04-24"
+      },
+      {
+        "actual": 85.71,
+        "rf_pred": 94.85,
+        "xgb_pred": 94.99,
+        "rf_error": -9.14,
+        "xgb_error": -9.28,
+        "date": "2026-04-24"
+      },
+      {
+        "actual": 57.78,
+        "rf_pred": 52.33,
+        "xgb_pred": 51.0,
+        "rf_error": 5.45,
+        "xgb_error": 6.78,
+        "date": "2026-04-24"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.01,
+        "rf_error": 0.0,
+        "xgb_error": 0.01,
+        "date": "2026-04-24"
+      },
+      {
+        "actual": 82.86,
+        "rf_pred": 80.53,
+        "xgb_pred": 79.43,
+        "rf_error": 2.33,
+        "xgb_error": 3.43,
+        "date": "2026-04-24"
+      },
+      {
+        "actual": 44.0,
+        "rf_pred": 48.59,
+        "xgb_pred": 47.65,
+        "rf_error": -4.59,
+        "xgb_error": -3.65,
+        "date": "2026-04-24"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.0,
+        "rf_error": 0.0,
+        "xgb_error": 0.0,
+        "date": "2026-04-24"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.01,
+        "rf_error": 0.0,
+        "xgb_error": 0.01,
+        "date": "2026-04-24"
+      },
+      {
+        "actual": 66.67,
+        "rf_pred": 74.53,
+        "xgb_pred": 75.9,
+        "rf_error": -7.86,
+        "xgb_error": -9.23,
+        "date": "2026-04-24"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.01,
+        "rf_error": 0.0,
+        "xgb_error": 0.01,
+        "date": "2026-04-24"
+      },
+      {
+        "actual": 32.5,
+        "rf_pred": 37.95,
+        "xgb_pred": 35.69,
+        "rf_error": -5.45,
+        "xgb_error": -3.19,
+        "date": "2026-04-24"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.02,
+        "rf_error": 0.0,
+        "xgb_error": 0.02,
+        "date": "2026-04-24"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.02,
+        "rf_error": 0.0,
+        "xgb_error": -0.02,
+        "date": "2026-04-24"
+      },
+      {
+        "actual": 50.0,
+        "rf_pred": 47.19,
+        "xgb_pred": 48.17,
+        "rf_error": 2.81,
+        "xgb_error": 1.83,
+        "date": "2026-04-24"
+      },
+      {
+        "actual": 23.33,
+        "rf_pred": 30.14,
+        "xgb_pred": 29.82,
+        "rf_error": -6.81,
+        "xgb_error": -6.49,
+        "date": "2026-04-24"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.15,
+        "rf_error": 0.0,
+        "xgb_error": 0.15,
+        "date": "2026-04-24"
+      },
+      {
+        "actual": 21.0,
+        "rf_pred": 19.95,
+        "xgb_pred": 20.78,
+        "rf_error": 1.05,
+        "xgb_error": 0.22,
+        "date": "2026-04-24"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.01,
+        "rf_error": 0.0,
+        "xgb_error": 0.01,
+        "date": "2026-04-25"
+      },
+      {
+        "actual": 70.0,
+        "rf_pred": 67.83,
+        "xgb_pred": 71.52,
+        "rf_error": 2.17,
+        "xgb_error": -1.52,
+        "date": "2026-04-25"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.03,
+        "rf_error": 0.0,
+        "xgb_error": 0.03,
+        "date": "2026-04-25"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.02,
+        "rf_error": 0.0,
+        "xgb_error": 0.02,
+        "date": "2026-04-25"
+      },
+      {
+        "actual": 97.14,
+        "rf_pred": 94.02,
+        "xgb_pred": 91.6,
+        "rf_error": 3.12,
+        "xgb_error": 5.54,
+        "date": "2026-04-25"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.03,
+        "rf_error": 0.0,
+        "xgb_error": 0.03,
+        "date": "2026-04-25"
+      },
+      {
+        "actual": 60.0,
+        "rf_pred": 54.47,
+        "xgb_pred": 55.34,
+        "rf_error": 5.53,
+        "xgb_error": 4.66,
+        "date": "2026-04-25"
+      },
+      {
+        "actual": 40.0,
+        "rf_pred": 37.34,
+        "xgb_pred": 39.01,
+        "rf_error": 2.66,
+        "xgb_error": 0.99,
+        "date": "2026-04-25"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.03,
+        "rf_error": 0.0,
+        "xgb_error": 0.03,
+        "date": "2026-04-25"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.0,
+        "rf_error": 0.0,
+        "xgb_error": -0.0,
+        "date": "2026-04-25"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.02,
+        "rf_error": 0.0,
+        "xgb_error": -0.02,
+        "date": "2026-04-25"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.02,
+        "rf_error": 0.0,
+        "xgb_error": 0.02,
+        "date": "2026-04-25"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.03,
+        "rf_error": 0.0,
+        "xgb_error": 0.03,
+        "date": "2026-04-25"
+      },
+      {
+        "actual": 75.0,
+        "rf_pred": 66.06,
+        "xgb_pred": 64.18,
+        "rf_error": 8.94,
+        "xgb_error": 10.82,
+        "date": "2026-04-25"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.01,
+        "rf_error": 0.0,
+        "xgb_error": -0.01,
+        "date": "2026-04-27"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.01,
+        "rf_error": 0.0,
+        "xgb_error": 0.01,
+        "date": "2026-04-27"
+      },
+      {
+        "actual": 52.0,
+        "rf_pred": 51.18,
+        "xgb_pred": 51.1,
+        "rf_error": 0.82,
+        "xgb_error": 0.9,
+        "date": "2026-04-27"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.0,
+        "rf_error": 0.0,
+        "xgb_error": 0.0,
+        "date": "2026-04-27"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.0,
+        "rf_error": 0.0,
+        "xgb_error": -0.0,
+        "date": "2026-04-27"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.01,
+        "rf_error": 0.0,
+        "xgb_error": -0.01,
+        "date": "2026-04-27"
+      },
+      {
+        "actual": 51.43,
+        "rf_pred": 53.87,
+        "xgb_pred": 55.29,
+        "rf_error": -2.44,
+        "xgb_error": -3.86,
+        "date": "2026-04-27"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.01,
+        "rf_error": 0.0,
+        "xgb_error": 0.01,
+        "date": "2026-04-27"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.0,
+        "rf_error": 0.0,
+        "xgb_error": 0.0,
+        "date": "2026-04-27"
+      },
+      {
+        "actual": 97.5,
+        "rf_pred": 84.97,
+        "xgb_pred": 83.72,
+        "rf_error": 12.53,
+        "xgb_error": 13.78,
+        "date": "2026-04-27"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.03,
+        "rf_error": 0.0,
+        "xgb_error": 0.03,
+        "date": "2026-04-27"
+      },
+      {
+        "actual": 72.5,
+        "rf_pred": 86.75,
+        "xgb_pred": 80.4,
+        "rf_error": -14.25,
+        "xgb_error": -7.9,
+        "date": "2026-04-27"
+      },
+      {
+        "actual": 85.0,
+        "rf_pred": 95.28,
+        "xgb_pred": 91.22,
+        "rf_error": -10.28,
+        "xgb_error": -6.22,
+        "date": "2026-04-27"
+      },
+      {
+        "actual": 83.0,
+        "rf_pred": 72.56,
+        "xgb_pred": 71.53,
+        "rf_error": 10.44,
+        "xgb_error": 11.47,
+        "date": "2026-04-27"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.02,
+        "rf_error": 0.0,
+        "xgb_error": -0.02,
+        "date": "2026-04-27"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.0,
+        "rf_error": 0.0,
+        "xgb_error": 0.0,
+        "date": "2026-04-28"
+      },
+      {
+        "actual": 45.0,
+        "rf_pred": 49.3,
+        "xgb_pred": 50.52,
+        "rf_error": -4.3,
+        "xgb_error": -5.52,
+        "date": "2026-04-28"
+      },
+      {
+        "actual": 84.0,
+        "rf_pred": 81.49,
+        "xgb_pred": 83.85,
+        "rf_error": 2.51,
+        "xgb_error": 0.15,
+        "date": "2026-04-28"
+      },
+      {
+        "actual": 101.0,
+        "rf_pred": 93.25,
+        "xgb_pred": 90.2,
+        "rf_error": 7.75,
+        "xgb_error": 10.8,
+        "date": "2026-04-28"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.01,
+        "rf_error": 0.0,
+        "xgb_error": 0.01,
+        "date": "2026-04-28"
+      },
+      {
+        "actual": 65.0,
+        "rf_pred": 56.82,
+        "xgb_pred": 56.3,
+        "rf_error": 8.18,
+        "xgb_error": 8.7,
+        "date": "2026-04-28"
+      },
+      {
+        "actual": 88.89,
+        "rf_pred": 77.24,
+        "xgb_pred": 75.41,
+        "rf_error": 11.65,
+        "xgb_error": 13.48,
+        "date": "2026-04-28"
+      },
+      {
+        "actual": 66.67,
+        "rf_pred": 69.17,
+        "xgb_pred": 71.01,
+        "rf_error": -2.5,
+        "xgb_error": -4.34,
+        "date": "2026-04-28"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.01,
+        "rf_error": 0.0,
+        "xgb_error": 0.01,
+        "date": "2026-04-28"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.01,
+        "rf_error": 0.0,
+        "xgb_error": 0.01,
+        "date": "2026-04-28"
+      },
+      {
+        "actual": 70.0,
+        "rf_pred": 64.62,
+        "xgb_pred": 64.07,
+        "rf_error": 5.38,
+        "xgb_error": 5.93,
+        "date": "2026-04-28"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.02,
+        "rf_error": 0.0,
+        "xgb_error": 0.02,
+        "date": "2026-04-28"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.02,
+        "rf_error": 0.0,
+        "xgb_error": 0.02,
+        "date": "2026-04-28"
+      },
+      {
+        "actual": 42.5,
+        "rf_pred": 45.66,
+        "xgb_pred": 43.3,
+        "rf_error": -3.16,
+        "xgb_error": -0.8,
+        "date": "2026-04-28"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.01,
+        "rf_error": 0.0,
+        "xgb_error": -0.01,
+        "date": "2026-04-28"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.01,
+        "rf_error": 0.0,
+        "xgb_error": 0.01,
+        "date": "2026-04-28"
+      },
+      {
+        "actual": 15.0,
+        "rf_pred": 16.99,
+        "xgb_pred": 17.11,
+        "rf_error": -1.99,
+        "xgb_error": -2.11,
+        "date": "2026-04-28"
+      },
+      {
+        "actual": 48.33,
+        "rf_pred": 49.24,
+        "xgb_pred": 48.83,
+        "rf_error": -0.91,
+        "xgb_error": -0.5,
+        "date": "2026-04-28"
+      },
+      {
+        "actual": 38.33,
+        "rf_pred": 36.41,
+        "xgb_pred": 36.69,
+        "rf_error": 1.92,
+        "xgb_error": 1.64,
+        "date": "2026-04-28"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.01,
+        "rf_error": 0.0,
+        "xgb_error": 0.01,
+        "date": "2026-04-28"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.15,
+        "rf_error": 0.0,
+        "xgb_error": 0.15,
+        "date": "2026-04-28"
+      },
+      {
+        "actual": 70.0,
+        "rf_pred": 64.05,
+        "xgb_pred": 64.82,
+        "rf_error": 5.95,
+        "xgb_error": 5.18,
+        "date": "2026-04-28"
+      },
+      {
+        "actual": 56.0,
+        "rf_pred": 58.53,
+        "xgb_pred": 58.2,
+        "rf_error": -2.53,
+        "xgb_error": -2.2,
+        "date": "2026-04-29"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.08,
+        "rf_error": 0.0,
+        "xgb_error": -0.08,
+        "date": "2026-04-29"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.06,
+        "rf_error": 0.0,
+        "xgb_error": -0.06,
+        "date": "2026-04-29"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.02,
+        "rf_error": 0.0,
+        "xgb_error": 0.02,
+        "date": "2026-04-29"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.06,
+        "rf_error": 0.0,
+        "xgb_error": -0.06,
+        "date": "2026-04-29"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.12,
+        "rf_error": 0.0,
+        "xgb_error": -0.12,
+        "date": "2026-04-29"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.1,
+        "rf_error": 0.0,
+        "xgb_error": -0.1,
+        "date": "2026-04-29"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.04,
+        "rf_error": 0.0,
+        "xgb_error": -0.04,
+        "date": "2026-04-29"
+      },
+      {
+        "actual": 83.75,
+        "rf_pred": 85.95,
+        "xgb_pred": 85.47,
+        "rf_error": -2.2,
+        "xgb_error": -1.72,
+        "date": "2026-04-29"
+      },
+      {
+        "actual": 67.5,
+        "rf_pred": 55.84,
+        "xgb_pred": 54.98,
+        "rf_error": 11.66,
+        "xgb_error": 12.52,
+        "date": "2026-04-29"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.05,
+        "rf_error": 0.0,
+        "xgb_error": -0.05,
+        "date": "2026-04-29"
+      },
+      {
+        "actual": 38.75,
+        "rf_pred": 35.89,
+        "xgb_pred": 34.61,
+        "rf_error": 2.86,
+        "xgb_error": 4.14,
+        "date": "2026-04-29"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.05,
+        "rf_error": 0.0,
+        "xgb_error": -0.05,
+        "date": "2026-04-29"
+      },
+      {
+        "actual": 52.5,
+        "rf_pred": 55.59,
+        "xgb_pred": 52.22,
+        "rf_error": -3.09,
+        "xgb_error": 0.28,
+        "date": "2026-04-30"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.02,
+        "rf_error": 0.0,
+        "xgb_error": 0.02,
+        "date": "2026-04-30"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.02,
+        "rf_error": 0.0,
+        "xgb_error": 0.02,
+        "date": "2026-04-30"
+      },
+      {
+        "actual": 42.5,
+        "rf_pred": 41.71,
+        "xgb_pred": 42.07,
+        "rf_error": 0.79,
+        "xgb_error": 0.43,
+        "date": "2026-04-30"
+      },
+      {
+        "actual": 54.29,
+        "rf_pred": 64.26,
+        "xgb_pred": 66.58,
+        "rf_error": -9.97,
+        "xgb_error": -12.29,
+        "date": "2026-04-30"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.02,
+        "rf_error": 0.0,
+        "xgb_error": 0.02,
+        "date": "2026-04-30"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.04,
+        "rf_error": 0.0,
+        "xgb_error": -0.04,
+        "date": "2026-04-30"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.04,
+        "rf_error": 0.0,
+        "xgb_error": 0.04,
+        "date": "2026-04-30"
+      },
+      {
+        "actual": 65.0,
+        "rf_pred": 59.53,
+        "xgb_pred": 56.23,
+        "rf_error": 5.47,
+        "xgb_error": 8.77,
+        "date": "2026-04-30"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.04,
+        "rf_error": 0.0,
+        "xgb_error": 0.04,
+        "date": "2026-04-30"
+      },
+      {
+        "actual": 70.0,
+        "rf_pred": 67.01,
+        "xgb_pred": 66.35,
+        "rf_error": 2.99,
+        "xgb_error": 3.65,
+        "date": "2026-04-30"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.09,
+        "rf_error": 0.0,
+        "xgb_error": -0.09,
+        "date": "2026-04-30"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.07,
+        "rf_error": 0.0,
+        "xgb_error": -0.07,
+        "date": "2026-04-30"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.03,
+        "rf_error": 0.0,
+        "xgb_error": 0.03,
+        "date": "2026-04-30"
+      },
+      {
+        "actual": 70.0,
+        "rf_pred": 95.1,
+        "xgb_pred": 94.58,
+        "rf_error": -25.1,
+        "xgb_error": -24.58,
+        "date": "2026-04-30"
+      },
+      {
+        "actual": 90.0,
+        "rf_pred": 80.32,
+        "xgb_pred": 75.62,
+        "rf_error": 9.68,
+        "xgb_error": 14.38,
+        "date": "2026-04-30"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.15,
+        "rf_error": 0.0,
+        "xgb_error": 0.15,
+        "date": "2026-04-30"
+      },
+      {
+        "actual": 100.0,
+        "rf_pred": 94.47,
+        "xgb_pred": 96.64,
+        "rf_error": 5.53,
+        "xgb_error": 3.36,
+        "date": "2026-05-01"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.06,
+        "rf_error": 0.0,
+        "xgb_error": -0.06,
+        "date": "2026-05-01"
+      },
+      {
+        "actual": 14.0,
+        "rf_pred": 14.28,
+        "xgb_pred": 12.1,
+        "rf_error": -0.28,
+        "xgb_error": 1.9,
+        "date": "2026-05-01"
+      },
+      {
+        "actual": 62.0,
+        "rf_pred": 49.73,
+        "xgb_pred": 54.53,
+        "rf_error": 12.27,
+        "xgb_error": 7.47,
+        "date": "2026-05-01"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.13,
+        "rf_error": 0.0,
+        "xgb_error": 0.13,
+        "date": "2026-05-01"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.06,
+        "rf_error": 0.0,
+        "xgb_error": -0.06,
+        "date": "2026-05-01"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.01,
+        "rf_error": 0.0,
+        "xgb_error": 0.01,
+        "date": "2026-05-01"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.08,
+        "rf_error": 0.0,
+        "xgb_error": -0.08,
+        "date": "2026-05-01"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.01,
+        "rf_error": 0.0,
+        "xgb_error": -0.01,
+        "date": "2026-05-01"
+      },
+      {
+        "actual": 96.67,
+        "rf_pred": 89.25,
+        "xgb_pred": 89.57,
+        "rf_error": 7.42,
+        "xgb_error": 7.1,
+        "date": "2026-05-01"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.02,
+        "rf_error": 0.0,
+        "xgb_error": 0.02,
+        "date": "2026-05-01"
+      },
+      {
+        "actual": 20.0,
+        "rf_pred": 21.78,
+        "xgb_pred": 21.48,
+        "rf_error": -1.78,
+        "xgb_error": -1.48,
+        "date": "2026-05-01"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.01,
+        "rf_error": 0.0,
+        "xgb_error": 0.01,
+        "date": "2026-05-02"
+      },
+      {
+        "actual": 73.0,
+        "rf_pred": 62.92,
+        "xgb_pred": 65.99,
+        "rf_error": 10.08,
+        "xgb_error": 7.01,
+        "date": "2026-05-02"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.14,
+        "rf_error": 0.0,
+        "xgb_error": -0.14,
+        "date": "2026-05-02"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.08,
+        "rf_error": 0.0,
+        "xgb_error": -0.08,
+        "date": "2026-05-02"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.03,
+        "rf_error": 0.0,
+        "xgb_error": 0.03,
+        "date": "2026-05-02"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.01,
+        "rf_error": 0.0,
+        "xgb_error": -0.01,
+        "date": "2026-05-04"
+      },
+      {
+        "actual": 42.5,
+        "rf_pred": 47.58,
+        "xgb_pred": 47.48,
+        "rf_error": -5.08,
+        "xgb_error": -4.98,
+        "date": "2026-05-04"
+      },
+      {
+        "actual": 32.0,
+        "rf_pred": 32.05,
+        "xgb_pred": 34.32,
+        "rf_error": -0.05,
+        "xgb_error": -2.32,
+        "date": "2026-05-04"
+      },
+      {
+        "actual": 34.29,
+        "rf_pred": 36.49,
+        "xgb_pred": 34.15,
+        "rf_error": -2.2,
+        "xgb_error": 0.14,
+        "date": "2026-05-04"
+      },
+      {
+        "actual": 42.5,
+        "rf_pred": 45.46,
+        "xgb_pred": 46.8,
+        "rf_error": -2.96,
+        "xgb_error": -4.3,
+        "date": "2026-05-04"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.03,
+        "rf_error": 0.0,
+        "xgb_error": -0.03,
+        "date": "2026-05-04"
+      },
+      {
+        "actual": 87.14,
+        "rf_pred": 85.12,
+        "xgb_pred": 87.59,
+        "rf_error": 2.02,
+        "xgb_error": -0.45,
+        "date": "2026-05-04"
+      },
+      {
+        "actual": 88.75,
+        "rf_pred": 93.81,
+        "xgb_pred": 93.94,
+        "rf_error": -5.06,
+        "xgb_error": -5.19,
+        "date": "2026-05-04"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.02,
+        "rf_error": 0.0,
+        "xgb_error": -0.02,
+        "date": "2026-05-04"
+      },
+      {
+        "actual": 62.5,
+        "rf_pred": 78.12,
+        "xgb_pred": 75.53,
+        "rf_error": -15.62,
+        "xgb_error": -13.03,
+        "date": "2026-05-05"
+      },
+      {
+        "actual": 70.0,
+        "rf_pred": 86.4,
+        "xgb_pred": 87.64,
+        "rf_error": -16.4,
+        "xgb_error": -17.64,
+        "date": "2026-05-05"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.0,
+        "rf_error": 0.0,
+        "xgb_error": -0.0,
+        "date": "2026-05-05"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.0,
+        "rf_error": 0.0,
+        "xgb_error": 0.0,
+        "date": "2026-05-05"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.01,
+        "rf_error": 0.0,
+        "xgb_error": -0.01,
+        "date": "2026-05-05"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.03,
+        "rf_error": 0.0,
+        "xgb_error": -0.03,
+        "date": "2026-05-05"
+      },
+      {
+        "actual": 45.71,
+        "rf_pred": 52.81,
+        "xgb_pred": 51.72,
+        "rf_error": -7.1,
+        "xgb_error": -6.01,
+        "date": "2026-05-05"
+      },
+      {
+        "actual": 95.0,
+        "rf_pred": 91.45,
+        "xgb_pred": 89.14,
+        "rf_error": 3.55,
+        "xgb_error": 5.86,
+        "date": "2026-05-05"
+      },
+      {
+        "actual": 82.5,
+        "rf_pred": 83.26,
+        "xgb_pred": 87.81,
+        "rf_error": -0.76,
+        "xgb_error": -5.31,
+        "date": "2026-05-05"
+      },
+      {
+        "actual": 47.5,
+        "rf_pred": 51.62,
+        "xgb_pred": 52.45,
+        "rf_error": -4.12,
+        "xgb_error": -4.95,
+        "date": "2026-05-05"
+      },
+      {
+        "actual": 72.5,
+        "rf_pred": 84.12,
+        "xgb_pred": 85.82,
+        "rf_error": -11.62,
+        "xgb_error": -13.32,
+        "date": "2026-05-05"
+      },
+      {
+        "actual": 60.0,
+        "rf_pred": 48.35,
+        "xgb_pred": 51.23,
+        "rf_error": 11.65,
+        "xgb_error": 8.77,
+        "date": "2026-05-05"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.05,
+        "rf_error": 0.0,
+        "xgb_error": -0.05,
+        "date": "2026-05-06"
+      },
+      {
+        "actual": 28.89,
+        "rf_pred": 30.03,
+        "xgb_pred": 29.86,
+        "rf_error": -1.14,
+        "xgb_error": -0.97,
+        "date": "2026-05-06"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.04,
+        "rf_error": 0.0,
+        "xgb_error": -0.04,
+        "date": "2026-05-06"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.02,
+        "rf_error": 0.0,
+        "xgb_error": 0.02,
+        "date": "2026-05-06"
+      },
+      {
+        "actual": 45.71,
+        "rf_pred": 41.94,
+        "xgb_pred": 44.02,
+        "rf_error": 3.77,
+        "xgb_error": 1.69,
+        "date": "2026-05-06"
+      },
+      {
+        "actual": 96.0,
+        "rf_pred": 98.98,
+        "xgb_pred": 98.36,
+        "rf_error": -2.98,
+        "xgb_error": -2.36,
+        "date": "2026-05-06"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.08,
+        "rf_error": 0.0,
+        "xgb_error": -0.08,
+        "date": "2026-05-06"
+      },
+      {
+        "actual": 67.5,
+        "rf_pred": 84.84,
+        "xgb_pred": 82.07,
+        "rf_error": -17.34,
+        "xgb_error": -14.57,
+        "date": "2026-05-06"
+      },
+      {
+        "actual": 90.0,
+        "rf_pred": 81.74,
+        "xgb_pred": 82.78,
+        "rf_error": 8.26,
+        "xgb_error": 7.22,
+        "date": "2026-05-06"
+      },
+      {
+        "actual": 75.0,
+        "rf_pred": 91.2,
+        "xgb_pred": 90.7,
+        "rf_error": -16.2,
+        "xgb_error": -15.7,
+        "date": "2026-05-06"
+      },
+      {
+        "actual": 18.75,
+        "rf_pred": 19.86,
+        "xgb_pred": 19.35,
+        "rf_error": -1.11,
+        "xgb_error": -0.6,
+        "date": "2026-05-06"
+      },
+      {
+        "actual": 25.0,
+        "rf_pred": 21.19,
+        "xgb_pred": 21.05,
+        "rf_error": 3.81,
+        "xgb_error": 3.95,
+        "date": "2026-05-06"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.02,
+        "rf_error": 0.0,
+        "xgb_error": -0.02,
+        "date": "2026-05-07"
+      },
+      {
+        "actual": 74.0,
+        "rf_pred": 69.14,
+        "xgb_pred": 68.27,
+        "rf_error": 4.86,
+        "xgb_error": 5.73,
+        "date": "2026-05-07"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.01,
+        "rf_error": 0.0,
+        "xgb_error": 0.01,
+        "date": "2026-05-07"
+      },
+      {
+        "actual": 82.86,
+        "rf_pred": 86.18,
+        "xgb_pred": 78.07,
+        "rf_error": -3.32,
+        "xgb_error": 4.79,
+        "date": "2026-05-07"
+      },
+      {
+        "actual": 64.44,
+        "rf_pred": 62.43,
+        "xgb_pred": 65.52,
+        "rf_error": 2.01,
+        "xgb_error": -1.08,
+        "date": "2026-05-07"
+      },
+      {
+        "actual": 46.67,
+        "rf_pred": 51.29,
+        "xgb_pred": 52.64,
+        "rf_error": -4.62,
+        "xgb_error": -5.97,
+        "date": "2026-05-07"
+      },
+      {
+        "actual": 55.0,
+        "rf_pred": 64.51,
+        "xgb_pred": 65.02,
+        "rf_error": -9.51,
+        "xgb_error": -10.02,
+        "date": "2026-05-07"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.04,
+        "rf_error": 0.0,
+        "xgb_error": -0.04,
+        "date": "2026-05-07"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.03,
+        "rf_error": 0.0,
+        "xgb_error": 0.03,
+        "date": "2026-05-07"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.0,
+        "rf_error": 0.0,
+        "xgb_error": -0.0,
+        "date": "2026-05-07"
+      },
+      {
+        "actual": 13.0,
+        "rf_pred": 12.56,
+        "xgb_pred": 12.32,
+        "rf_error": 0.44,
+        "xgb_error": 0.68,
+        "date": "2026-05-07"
+      },
+      {
+        "actual": 56.67,
+        "rf_pred": 54.5,
+        "xgb_pred": 51.61,
+        "rf_error": 2.17,
+        "xgb_error": 5.06,
+        "date": "2026-05-07"
+      },
+      {
+        "actual": 48.33,
+        "rf_pred": 38.91,
+        "xgb_pred": 40.58,
+        "rf_error": 9.42,
+        "xgb_error": 7.75,
+        "date": "2026-05-07"
+      },
+      {
+        "actual": 57.5,
+        "rf_pred": 65.91,
+        "xgb_pred": 66.9,
+        "rf_error": -8.41,
+        "xgb_error": -9.4,
+        "date": "2026-05-08"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.03,
+        "rf_error": 0.0,
+        "xgb_error": -0.03,
+        "date": "2026-05-08"
+      },
+      {
+        "actual": 40.0,
+        "rf_pred": 46.71,
+        "xgb_pred": 47.45,
+        "rf_error": -6.71,
+        "xgb_error": -7.45,
+        "date": "2026-05-08"
+      },
+      {
+        "actual": 62.22,
+        "rf_pred": 59.74,
+        "xgb_pred": 59.81,
+        "rf_error": 2.48,
+        "xgb_error": 2.41,
+        "date": "2026-05-08"
+      },
+      {
+        "actual": 34.29,
+        "rf_pred": 35.56,
+        "xgb_pred": 33.65,
+        "rf_error": -1.27,
+        "xgb_error": 0.64,
+        "date": "2026-05-08"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.04,
+        "rf_error": 0.0,
+        "xgb_error": -0.04,
+        "date": "2026-05-08"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.01,
+        "rf_error": 0.0,
+        "xgb_error": -0.01,
+        "date": "2026-05-08"
+      },
+      {
+        "actual": 67.14,
+        "rf_pred": 61.26,
+        "xgb_pred": 63.28,
+        "rf_error": 5.88,
+        "xgb_error": 3.86,
+        "date": "2026-05-08"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.06,
+        "rf_error": 0.0,
+        "xgb_error": -0.06,
+        "date": "2026-05-08"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.0,
+        "rf_error": 0.0,
+        "xgb_error": 0.0,
+        "date": "2026-05-08"
+      },
+      {
+        "actual": 58.75,
+        "rf_pred": 49.68,
+        "xgb_pred": 49.26,
+        "rf_error": 9.07,
+        "xgb_error": 9.49,
+        "date": "2026-05-08"
+      },
+      {
+        "actual": 46.25,
+        "rf_pred": 45.83,
+        "xgb_pred": 44.9,
+        "rf_error": 0.42,
+        "xgb_error": 1.35,
+        "date": "2026-05-08"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.12,
+        "rf_error": 0.0,
+        "xgb_error": 0.12,
+        "date": "2026-05-08"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.03,
+        "rf_error": 0.0,
+        "xgb_error": 0.03,
+        "date": "2026-05-08"
+      },
+      {
+        "actual": 100.0,
+        "rf_pred": 88.34,
+        "xgb_pred": 89.82,
+        "rf_error": 11.66,
+        "xgb_error": 10.18,
+        "date": "2026-05-09"
+      },
+      {
+        "actual": 87.5,
+        "rf_pred": 103.45,
+        "xgb_pred": 97.92,
+        "rf_error": -15.95,
+        "xgb_error": -10.42,
+        "date": "2026-05-09"
+      },
+      {
+        "actual": 96.0,
+        "rf_pred": 98.49,
+        "xgb_pred": 98.11,
+        "rf_error": -2.49,
+        "xgb_error": -2.11,
+        "date": "2026-05-09"
+      },
+      {
+        "actual": 52.5,
+        "rf_pred": 56.75,
+        "xgb_pred": 58.68,
+        "rf_error": -4.25,
+        "xgb_error": -6.18,
+        "date": "2026-05-09"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.01,
+        "rf_error": 0.0,
+        "xgb_error": 0.01,
+        "date": "2026-05-09"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.01,
+        "rf_error": 0.0,
+        "xgb_error": 0.01,
+        "date": "2026-05-09"
+      },
+      {
+        "actual": 30.0,
+        "rf_pred": 36.48,
+        "xgb_pred": 35.28,
+        "rf_error": -6.48,
+        "xgb_error": -5.28,
+        "date": "2026-05-09"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.03,
+        "rf_error": 0.0,
+        "xgb_error": 0.03,
+        "date": "2026-05-09"
+      },
+      {
+        "actual": 85.0,
+        "rf_pred": 83.69,
+        "xgb_pred": 84.53,
+        "rf_error": 1.31,
+        "xgb_error": 0.47,
+        "date": "2026-05-09"
+      },
+      {
+        "actual": 40.0,
+        "rf_pred": 39.15,
+        "xgb_pred": 36.37,
+        "rf_error": 0.85,
+        "xgb_error": 3.63,
+        "date": "2026-05-09"
+      },
+      {
+        "actual": 98.33,
+        "rf_pred": 103.36,
+        "xgb_pred": 102.2,
+        "rf_error": -5.03,
+        "xgb_error": -3.87,
+        "date": "2026-05-09"
+      },
+      {
+        "actual": 42.5,
+        "rf_pred": 38.69,
+        "xgb_pred": 41.67,
+        "rf_error": 3.81,
+        "xgb_error": 0.83,
+        "date": "2026-05-09"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.01,
+        "rf_error": 0.0,
+        "xgb_error": 0.01,
+        "date": "2026-05-09"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.0,
+        "rf_error": 0.0,
+        "xgb_error": -0.0,
+        "date": "2026-05-09"
+      },
+      {
+        "actual": 96.25,
+        "rf_pred": 88.75,
+        "xgb_pred": 87.5,
+        "rf_error": 7.5,
+        "xgb_error": 8.75,
+        "date": "2026-05-09"
+      },
+      {
+        "actual": 66.0,
+        "rf_pred": 63.05,
+        "xgb_pred": 61.28,
+        "rf_error": 2.95,
+        "xgb_error": 4.72,
+        "date": "2026-05-11"
+      },
+      {
+        "actual": 58.0,
+        "rf_pred": 52.22,
+        "xgb_pred": 51.83,
+        "rf_error": 5.78,
+        "xgb_error": 6.17,
+        "date": "2026-05-11"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.03,
+        "rf_error": 0.0,
+        "xgb_error": -0.03,
+        "date": "2026-05-11"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.03,
+        "rf_error": 0.0,
+        "xgb_error": -0.03,
+        "date": "2026-05-11"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.03,
+        "rf_error": 0.0,
+        "xgb_error": -0.03,
+        "date": "2026-05-11"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.04,
+        "rf_error": 0.0,
+        "xgb_error": 0.04,
+        "date": "2026-05-11"
+      },
+      {
+        "actual": 31.25,
+        "rf_pred": 27.84,
+        "xgb_pred": 27.23,
+        "rf_error": 3.41,
+        "xgb_error": 4.02,
+        "date": "2026-05-11"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.03,
+        "rf_error": 0.0,
+        "xgb_error": -0.03,
+        "date": "2026-05-11"
+      },
+      {
+        "actual": 88.33,
+        "rf_pred": 71.56,
+        "xgb_pred": 72.93,
+        "rf_error": 16.77,
+        "xgb_error": 15.4,
+        "date": "2026-05-11"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.04,
+        "rf_error": 0.0,
+        "xgb_error": -0.04,
+        "date": "2026-05-11"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.02,
+        "rf_error": 0.0,
+        "xgb_error": -0.02,
+        "date": "2026-05-11"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.05,
+        "rf_error": 0.0,
+        "xgb_error": -0.05,
+        "date": "2026-05-11"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.0,
+        "rf_error": 0.0,
+        "xgb_error": 0.0,
+        "date": "2026-05-11"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.01,
+        "rf_error": 0.0,
+        "xgb_error": -0.01,
+        "date": "2026-05-11"
+      },
+      {
+        "actual": 102.0,
+        "rf_pred": 94.81,
+        "xgb_pred": 90.77,
+        "rf_error": 7.19,
+        "xgb_error": 11.23,
+        "date": "2026-05-12"
+      },
+      {
+        "actual": 75.71,
+        "rf_pred": 91.54,
+        "xgb_pred": 92.55,
+        "rf_error": -15.83,
+        "xgb_error": -16.84,
+        "date": "2026-05-12"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.01,
+        "rf_error": 0.0,
+        "xgb_error": -0.01,
+        "date": "2026-05-12"
+      },
+      {
+        "actual": 62.22,
+        "rf_pred": 70.03,
+        "xgb_pred": 70.42,
+        "rf_error": -7.81,
+        "xgb_error": -8.2,
+        "date": "2026-05-12"
+      },
+      {
+        "actual": 105.71,
+        "rf_pred": 93.34,
+        "xgb_pred": 91.0,
+        "rf_error": 12.37,
+        "xgb_error": 14.71,
+        "date": "2026-05-12"
+      },
+      {
+        "actual": 57.14,
+        "rf_pred": 57.03,
+        "xgb_pred": 59.33,
+        "rf_error": 0.11,
+        "xgb_error": -2.19,
+        "date": "2026-05-12"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.0,
+        "rf_error": 0.0,
+        "xgb_error": -0.0,
+        "date": "2026-05-12"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.04,
+        "rf_error": 0.0,
+        "xgb_error": -0.04,
+        "date": "2026-05-12"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.01,
+        "rf_error": 0.0,
+        "xgb_error": -0.01,
+        "date": "2026-05-12"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.01,
+        "rf_error": 0.0,
+        "xgb_error": 0.01,
+        "date": "2026-05-12"
+      },
+      {
+        "actual": 62.5,
+        "rf_pred": 58.21,
+        "xgb_pred": 60.66,
+        "rf_error": 4.29,
+        "xgb_error": 1.84,
+        "date": "2026-05-13"
+      },
+      {
+        "actual": 42.5,
+        "rf_pred": 42.77,
+        "xgb_pred": 44.34,
+        "rf_error": -0.27,
+        "xgb_error": -1.84,
+        "date": "2026-05-13"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.06,
+        "rf_error": 0.0,
+        "xgb_error": -0.06,
+        "date": "2026-05-13"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.05,
+        "rf_error": 0.0,
+        "xgb_error": -0.05,
+        "date": "2026-05-13"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.05,
+        "rf_error": 0.0,
+        "xgb_error": -0.05,
+        "date": "2026-05-13"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.01,
+        "rf_error": 0.0,
+        "xgb_error": -0.01,
+        "date": "2026-05-13"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.16,
+        "rf_error": 0.0,
+        "xgb_error": -0.16,
+        "date": "2026-05-13"
+      },
+      {
+        "actual": 60.0,
+        "rf_pred": 56.36,
+        "xgb_pred": 57.55,
+        "rf_error": 3.64,
+        "xgb_error": 2.45,
+        "date": "2026-05-13"
+      },
+      {
+        "actual": 24.44,
+        "rf_pred": 26.68,
+        "xgb_pred": 28.33,
+        "rf_error": -2.24,
+        "xgb_error": -3.89,
+        "date": "2026-05-14"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.01,
+        "rf_error": 0.0,
+        "xgb_error": 0.01,
+        "date": "2026-05-14"
+      },
+      {
+        "actual": 68.57,
+        "rf_pred": 67.42,
+        "xgb_pred": 69.4,
+        "rf_error": 1.15,
+        "xgb_error": -0.83,
+        "date": "2026-05-14"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.01,
+        "rf_error": 0.0,
+        "xgb_error": 0.01,
+        "date": "2026-05-14"
+      },
+      {
+        "actual": 65.71,
+        "rf_pred": 71.29,
+        "xgb_pred": 64.62,
+        "rf_error": -5.58,
+        "xgb_error": 1.09,
+        "date": "2026-05-14"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.02,
+        "rf_error": 0.0,
+        "xgb_error": -0.02,
+        "date": "2026-05-14"
+      },
+      {
+        "actual": 57.5,
+        "rf_pred": 49.65,
+        "xgb_pred": 50.32,
+        "rf_error": 7.85,
+        "xgb_error": 7.18,
+        "date": "2026-05-14"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.03,
+        "rf_error": 0.0,
+        "xgb_error": 0.03,
+        "date": "2026-05-14"
+      },
+      {
+        "actual": 35.0,
+        "rf_pred": 40.46,
+        "xgb_pred": 41.69,
+        "rf_error": -5.46,
+        "xgb_error": -6.69,
+        "date": "2026-05-14"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.01,
+        "rf_error": 0.0,
+        "xgb_error": 0.01,
+        "date": "2026-05-14"
+      },
+      {
+        "actual": 51.67,
+        "rf_pred": 64.15,
+        "xgb_pred": 63.93,
+        "rf_error": -12.48,
+        "xgb_error": -12.26,
+        "date": "2026-05-14"
+      },
+      {
+        "actual": 95.0,
+        "rf_pred": 109.33,
+        "xgb_pred": 102.71,
+        "rf_error": -14.33,
+        "xgb_error": -7.71,
+        "date": "2026-05-14"
+      },
+      {
+        "actual": 72.5,
+        "rf_pred": 69.76,
+        "xgb_pred": 70.58,
+        "rf_error": 2.74,
+        "xgb_error": 1.92,
+        "date": "2026-05-15"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.03,
+        "rf_error": 0.0,
+        "xgb_error": -0.03,
+        "date": "2026-05-15"
+      },
+      {
+        "actual": 95.0,
+        "rf_pred": 93.5,
+        "xgb_pred": 95.08,
+        "rf_error": 1.5,
+        "xgb_error": -0.08,
+        "date": "2026-05-15"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.01,
+        "rf_error": 0.0,
+        "xgb_error": 0.01,
+        "date": "2026-05-15"
+      },
+      {
+        "actual": 100.0,
+        "rf_pred": 89.81,
+        "xgb_pred": 89.21,
+        "rf_error": 10.19,
+        "xgb_error": 10.79,
+        "date": "2026-05-15"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.01,
+        "rf_error": 0.0,
+        "xgb_error": 0.01,
+        "date": "2026-05-15"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.03,
+        "rf_error": 0.0,
+        "xgb_error": -0.03,
+        "date": "2026-05-15"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.13,
+        "rf_error": 0.0,
+        "xgb_error": 0.13,
+        "date": "2026-05-15"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.0,
+        "rf_error": 0.0,
+        "xgb_error": -0.0,
+        "date": "2026-05-16"
+      },
+      {
+        "actual": 90.0,
+        "rf_pred": 69.72,
+        "xgb_pred": 76.97,
+        "rf_error": 20.28,
+        "xgb_error": 13.03,
+        "date": "2026-05-16"
+      },
+      {
+        "actual": 55.0,
+        "rf_pred": 46.57,
+        "xgb_pred": 46.43,
+        "rf_error": 8.43,
+        "xgb_error": 8.57,
+        "date": "2026-05-16"
+      },
+      {
+        "actual": 51.43,
+        "rf_pred": 50.73,
+        "xgb_pred": 54.71,
+        "rf_error": 0.7,
+        "xgb_error": -3.28,
+        "date": "2026-05-16"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.0,
+        "rf_error": 0.0,
+        "xgb_error": -0.0,
+        "date": "2026-05-16"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.01,
+        "rf_error": 0.0,
+        "xgb_error": -0.01,
+        "date": "2026-05-16"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.02,
+        "rf_error": 0.0,
+        "xgb_error": -0.02,
+        "date": "2026-05-16"
+      },
+      {
+        "actual": 27.14,
+        "rf_pred": 29.91,
+        "xgb_pred": 29.48,
+        "rf_error": -2.77,
+        "xgb_error": -2.34,
+        "date": "2026-05-16"
+      },
+      {
+        "actual": 77.5,
+        "rf_pred": 91.92,
+        "xgb_pred": 92.08,
+        "rf_error": -14.42,
+        "xgb_error": -14.58,
+        "date": "2026-05-16"
+      },
+      {
+        "actual": 72.0,
+        "rf_pred": 62.44,
+        "xgb_pred": 64.73,
+        "rf_error": 9.56,
+        "xgb_error": 7.27,
+        "date": "2026-05-18"
+      },
+      {
+        "actual": 64.29,
+        "rf_pred": 59.92,
+        "xgb_pred": 61.7,
+        "rf_error": 4.37,
+        "xgb_error": 2.59,
+        "date": "2026-05-18"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.02,
+        "rf_error": 0.0,
+        "xgb_error": -0.02,
+        "date": "2026-05-18"
+      },
+      {
+        "actual": 77.78,
+        "rf_pred": 70.22,
+        "xgb_pred": 69.06,
+        "rf_error": 7.56,
+        "xgb_error": 8.72,
+        "date": "2026-05-18"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.02,
+        "rf_error": 0.0,
+        "xgb_error": -0.02,
+        "date": "2026-05-18"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.02,
+        "rf_error": 0.0,
+        "xgb_error": -0.02,
+        "date": "2026-05-18"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.01,
+        "rf_error": 0.0,
+        "xgb_error": -0.01,
+        "date": "2026-05-18"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.02,
+        "rf_error": 0.0,
+        "xgb_error": -0.02,
+        "date": "2026-05-18"
+      },
+      {
+        "actual": 92.5,
+        "rf_pred": 77.81,
+        "xgb_pred": 78.72,
+        "rf_error": 14.69,
+        "xgb_error": 13.78,
+        "date": "2026-05-18"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.04,
+        "rf_error": 0.0,
+        "xgb_error": 0.04,
+        "date": "2026-05-18"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.07,
+        "rf_error": 0.0,
+        "xgb_error": -0.07,
+        "date": "2026-05-18"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.02,
+        "rf_error": 0.0,
+        "xgb_error": 0.02,
+        "date": "2026-05-18"
+      },
+      {
+        "actual": 52.5,
+        "rf_pred": 47.46,
+        "xgb_pred": 49.14,
+        "rf_error": 5.04,
+        "xgb_error": 3.36,
+        "date": "2026-05-18"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.01,
+        "rf_error": 0.0,
+        "xgb_error": -0.01,
+        "date": "2026-05-18"
+      },
+      {
+        "actual": 85.0,
+        "rf_pred": 99.77,
+        "xgb_pred": 98.23,
+        "rf_error": -14.77,
+        "xgb_error": -13.23,
+        "date": "2026-05-18"
+      },
+      {
+        "actual": 31.0,
+        "rf_pred": 30.64,
+        "xgb_pred": 29.67,
+        "rf_error": 0.36,
+        "xgb_error": 1.33,
+        "date": "2026-05-18"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.12,
+        "rf_error": 0.0,
+        "xgb_error": 0.12,
+        "date": "2026-05-18"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.0,
+        "rf_error": 0.0,
+        "xgb_error": 0.0,
+        "date": "2026-05-19"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.01,
+        "rf_error": 0.0,
+        "xgb_error": -0.01,
+        "date": "2026-05-19"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.01,
+        "rf_error": 0.0,
+        "xgb_error": 0.01,
+        "date": "2026-05-19"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.02,
+        "rf_error": 0.0,
+        "xgb_error": -0.02,
+        "date": "2026-05-19"
+      },
+      {
+        "actual": 110.0,
+        "rf_pred": 89.12,
+        "xgb_pred": 94.63,
+        "rf_error": 20.88,
+        "xgb_error": 15.37,
+        "date": "2026-05-19"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.01,
+        "rf_error": 0.0,
+        "xgb_error": -0.01,
+        "date": "2026-05-19"
+      },
+      {
+        "actual": 76.0,
+        "rf_pred": 86.85,
+        "xgb_pred": 83.05,
+        "rf_error": -10.85,
+        "xgb_error": -7.05,
+        "date": "2026-05-19"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.0,
+        "rf_error": 0.0,
+        "xgb_error": -0.0,
+        "date": "2026-05-19"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.02,
+        "rf_error": 0.0,
+        "xgb_error": -0.02,
+        "date": "2026-05-19"
+      },
+      {
+        "actual": 53.33,
+        "rf_pred": 61.75,
+        "xgb_pred": 61.3,
+        "rf_error": -8.42,
+        "xgb_error": -7.97,
+        "date": "2026-05-19"
+      },
+      {
+        "actual": 74.29,
+        "rf_pred": 75.9,
+        "xgb_pred": 74.16,
+        "rf_error": -1.61,
+        "xgb_error": 0.13,
+        "date": "2026-05-19"
+      },
+      {
+        "actual": 70.0,
+        "rf_pred": 59.79,
+        "xgb_pred": 59.73,
+        "rf_error": 10.21,
+        "xgb_error": 10.27,
+        "date": "2026-05-19"
+      },
+      {
+        "actual": 50.0,
+        "rf_pred": 57.98,
+        "xgb_pred": 59.46,
+        "rf_error": -7.98,
+        "xgb_error": -9.46,
+        "date": "2026-05-19"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.01,
+        "rf_error": 0.0,
+        "xgb_error": -0.01,
+        "date": "2026-05-19"
+      },
+      {
+        "actual": 83.75,
+        "rf_pred": 91.68,
+        "xgb_pred": 91.47,
+        "rf_error": -7.93,
+        "xgb_error": -7.72,
+        "date": "2026-05-19"
+      },
+      {
+        "actual": 74.29,
+        "rf_pred": 73.0,
+        "xgb_pred": 77.8,
+        "rf_error": 1.29,
+        "xgb_error": -3.51,
+        "date": "2026-05-19"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.12,
+        "rf_error": 0.0,
+        "xgb_error": 0.12,
+        "date": "2026-05-19"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.0,
+        "rf_error": 0.0,
+        "xgb_error": 0.0,
+        "date": "2026-05-19"
+      },
+      {
+        "actual": 43.75,
+        "rf_pred": 38.68,
+        "xgb_pred": 40.08,
+        "rf_error": 5.07,
+        "xgb_error": 3.67,
+        "date": "2026-05-19"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.05,
+        "rf_error": 0.0,
+        "xgb_error": -0.05,
+        "date": "2026-05-20"
+      },
+      {
+        "actual": 100.0,
+        "rf_pred": 80.96,
+        "xgb_pred": 78.47,
+        "rf_error": 19.04,
+        "xgb_error": 21.53,
+        "date": "2026-05-20"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.04,
+        "rf_error": 0.0,
+        "xgb_error": -0.04,
+        "date": "2026-05-20"
+      },
+      {
+        "actual": 43.0,
+        "rf_pred": 37.74,
+        "xgb_pred": 38.15,
+        "rf_error": 5.26,
+        "xgb_error": 4.85,
+        "date": "2026-05-20"
+      },
+      {
+        "actual": 44.0,
+        "rf_pred": 57.24,
+        "xgb_pred": 56.15,
+        "rf_error": -13.24,
+        "xgb_error": -12.15,
+        "date": "2026-05-20"
+      },
+      {
+        "actual": 48.89,
+        "rf_pred": 60.63,
+        "xgb_pred": 60.43,
+        "rf_error": -11.74,
+        "xgb_error": -11.54,
+        "date": "2026-05-20"
+      },
+      {
+        "actual": 97.78,
+        "rf_pred": 84.86,
+        "xgb_pred": 87.11,
+        "rf_error": 12.92,
+        "xgb_error": 10.67,
+        "date": "2026-05-20"
+      },
+      {
+        "actual": 94.29,
+        "rf_pred": 98.24,
+        "xgb_pred": 101.15,
+        "rf_error": -3.95,
+        "xgb_error": -6.86,
+        "date": "2026-05-20"
+      },
+      {
+        "actual": 26.25,
+        "rf_pred": 24.98,
+        "xgb_pred": 23.95,
+        "rf_error": 1.27,
+        "xgb_error": 2.3,
+        "date": "2026-05-20"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.15,
+        "rf_error": 0.0,
+        "xgb_error": -0.15,
+        "date": "2026-05-20"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.03,
+        "rf_error": 0.0,
+        "xgb_error": -0.03,
+        "date": "2026-05-20"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.05,
+        "rf_error": 0.0,
+        "xgb_error": -0.05,
+        "date": "2026-05-20"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.05,
+        "rf_error": 0.0,
+        "xgb_error": -0.05,
+        "date": "2026-05-20"
+      },
+      {
+        "actual": 20.0,
+        "rf_pred": 24.56,
+        "xgb_pred": 24.44,
+        "rf_error": -4.56,
+        "xgb_error": -4.44,
+        "date": "2026-05-20"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.02,
+        "rf_error": 0.0,
+        "xgb_error": 0.02,
+        "date": "2026-05-21"
+      },
+      {
+        "actual": 75.71,
+        "rf_pred": 73.04,
+        "xgb_pred": 70.61,
+        "rf_error": 2.67,
+        "xgb_error": 5.1,
+        "date": "2026-05-21"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.0,
+        "rf_error": 0.0,
+        "xgb_error": 0.0,
+        "date": "2026-05-21"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.13,
+        "rf_error": 0.0,
+        "xgb_error": 0.13,
+        "date": "2026-05-21"
+      },
+      {
+        "actual": 86.25,
+        "rf_pred": 81.06,
+        "xgb_pred": 78.07,
+        "rf_error": 5.19,
+        "xgb_error": 8.18,
+        "date": "2026-05-21"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.06,
+        "rf_error": 0.0,
+        "xgb_error": 0.06,
+        "date": "2026-05-21"
+      },
+      {
+        "actual": 37.5,
+        "rf_pred": 35.29,
+        "xgb_pred": 36.04,
+        "rf_error": 2.21,
+        "xgb_error": 1.46,
+        "date": "2026-05-21"
+      },
+      {
+        "actual": 42.5,
+        "rf_pred": 45.29,
+        "xgb_pred": 46.21,
+        "rf_error": -2.79,
+        "xgb_error": -3.71,
+        "date": "2026-05-21"
+      },
+      {
+        "actual": 73.33,
+        "rf_pred": 73.74,
+        "xgb_pred": 74.33,
+        "rf_error": -0.41,
+        "xgb_error": -1.0,
+        "date": "2026-05-21"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.13,
+        "rf_error": 0.0,
+        "xgb_error": 0.13,
+        "date": "2026-05-21"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.02,
+        "rf_error": 0.0,
+        "xgb_error": 0.02,
+        "date": "2026-05-21"
+      },
+      {
+        "actual": 70.0,
+        "rf_pred": 61.07,
+        "xgb_pred": 60.57,
+        "rf_error": 8.93,
+        "xgb_error": 9.43,
+        "date": "2026-05-22"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.02,
+        "rf_error": 0.0,
+        "xgb_error": -0.02,
+        "date": "2026-05-22"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.02,
+        "rf_error": 0.0,
+        "xgb_error": -0.02,
+        "date": "2026-05-22"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.0,
+        "rf_error": 0.0,
+        "xgb_error": 0.0,
+        "date": "2026-05-22"
+      },
+      {
+        "actual": 37.14,
+        "rf_pred": 35.69,
+        "xgb_pred": 37.55,
+        "rf_error": 1.45,
+        "xgb_error": -0.41,
+        "date": "2026-05-22"
+      },
+      {
+        "actual": 52.5,
+        "rf_pred": 47.67,
+        "xgb_pred": 50.17,
+        "rf_error": 4.83,
+        "xgb_error": 2.33,
+        "date": "2026-05-22"
+      },
+      {
+        "actual": 108.89,
+        "rf_pred": 99.71,
+        "xgb_pred": 99.35,
+        "rf_error": 9.18,
+        "xgb_error": 9.54,
+        "date": "2026-05-22"
+      },
+      {
+        "actual": 84.0,
+        "rf_pred": 90.35,
+        "xgb_pred": 97.16,
+        "rf_error": -6.35,
+        "xgb_error": -13.16,
+        "date": "2026-05-22"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.02,
+        "rf_error": 0.0,
+        "xgb_error": -0.02,
+        "date": "2026-05-22"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.12,
+        "rf_error": 0.0,
+        "xgb_error": 0.12,
+        "date": "2026-05-22"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.05,
+        "rf_error": 0.0,
+        "xgb_error": -0.05,
+        "date": "2026-05-22"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.05,
+        "rf_error": 0.0,
+        "xgb_error": -0.05,
+        "date": "2026-05-22"
+      },
+      {
+        "actual": 97.5,
+        "rf_pred": 91.1,
+        "xgb_pred": 94.7,
+        "rf_error": 6.4,
+        "xgb_error": 2.8,
+        "date": "2026-05-22"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.02,
+        "rf_error": 0.0,
+        "xgb_error": 0.02,
+        "date": "2026-05-22"
+      },
+      {
+        "actual": 60.0,
+        "rf_pred": 51.67,
+        "xgb_pred": 52.22,
+        "rf_error": 8.33,
+        "xgb_error": 7.78,
+        "date": "2026-05-22"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.01,
+        "rf_error": 0.0,
+        "xgb_error": 0.01,
+        "date": "2026-05-23"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.01,
+        "rf_error": 0.0,
+        "xgb_error": 0.01,
+        "date": "2026-05-23"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.0,
+        "rf_error": 0.0,
+        "xgb_error": -0.0,
+        "date": "2026-05-23"
+      },
+      {
+        "actual": 75.56,
+        "rf_pred": 72.62,
+        "xgb_pred": 71.59,
+        "rf_error": 2.94,
+        "xgb_error": 3.97,
+        "date": "2026-05-23"
+      },
+      {
+        "actual": 87.0,
+        "rf_pred": 67.73,
+        "xgb_pred": 73.04,
+        "rf_error": 19.27,
+        "xgb_error": 13.96,
+        "date": "2026-05-23"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.01,
+        "rf_error": 0.0,
+        "xgb_error": -0.01,
+        "date": "2026-05-23"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.0,
+        "rf_error": 0.0,
+        "xgb_error": 0.0,
+        "date": "2026-05-23"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.0,
+        "rf_error": 0.0,
+        "xgb_error": 0.0,
+        "date": "2026-05-23"
+      },
+      {
+        "actual": 37.5,
+        "rf_pred": 45.15,
+        "xgb_pred": 43.71,
+        "rf_error": -7.65,
+        "xgb_error": -6.21,
+        "date": "2026-05-23"
+      },
+      {
+        "actual": 31.25,
+        "rf_pred": 38.59,
+        "xgb_pred": 40.82,
+        "rf_error": -7.34,
+        "xgb_error": -9.57,
+        "date": "2026-05-23"
+      },
+      {
+        "actual": 75.0,
+        "rf_pred": 68.3,
+        "xgb_pred": 69.1,
+        "rf_error": 6.7,
+        "xgb_error": 5.9,
+        "date": "2026-05-23"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.02,
+        "rf_error": 0.0,
+        "xgb_error": 0.02,
+        "date": "2026-05-23"
+      },
+      {
+        "actual": 41.67,
+        "rf_pred": 45.39,
+        "xgb_pred": 45.78,
+        "rf_error": -3.72,
+        "xgb_error": -4.11,
+        "date": "2026-05-23"
+      },
+      {
+        "actual": 47.0,
+        "rf_pred": 50.74,
+        "xgb_pred": 50.3,
+        "rf_error": -3.74,
+        "xgb_error": -3.3,
+        "date": "2026-05-23"
+      },
+      {
+        "actual": 37.5,
+        "rf_pred": 36.19,
+        "xgb_pred": 35.59,
+        "rf_error": 1.31,
+        "xgb_error": 1.91,
+        "date": "2026-05-23"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.0,
+        "rf_error": 0.0,
+        "xgb_error": 0.0,
+        "date": "2026-05-25"
+      },
+      {
+        "actual": 82.5,
+        "rf_pred": 78.12,
+        "xgb_pred": 79.2,
+        "rf_error": 4.38,
+        "xgb_error": 3.3,
+        "date": "2026-05-25"
+      },
+      {
+        "actual": 108.57,
+        "rf_pred": 96.86,
+        "xgb_pred": 98.79,
+        "rf_error": 11.71,
+        "xgb_error": 9.78,
+        "date": "2026-05-25"
+      },
+      {
+        "actual": 72.0,
+        "rf_pred": 81.86,
+        "xgb_pred": 85.46,
+        "rf_error": -9.86,
+        "xgb_error": -13.46,
+        "date": "2026-05-25"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.0,
+        "rf_error": 0.0,
+        "xgb_error": 0.0,
+        "date": "2026-05-25"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.02,
+        "rf_error": 0.0,
+        "xgb_error": -0.02,
+        "date": "2026-05-25"
+      },
+      {
+        "actual": 88.75,
+        "rf_pred": 92.07,
+        "xgb_pred": 93.32,
+        "rf_error": -3.32,
+        "xgb_error": -4.57,
+        "date": "2026-05-25"
+      },
+      {
+        "actual": 60.0,
+        "rf_pred": 64.21,
+        "xgb_pred": 61.11,
+        "rf_error": -4.21,
+        "xgb_error": -1.11,
+        "date": "2026-05-25"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.02,
+        "rf_error": 0.0,
+        "xgb_error": -0.02,
+        "date": "2026-05-25"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.12,
+        "rf_error": 0.0,
+        "xgb_error": 0.12,
+        "date": "2026-05-25"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.01,
+        "rf_error": 0.0,
+        "xgb_error": 0.01,
+        "date": "2026-05-26"
+      },
+      {
+        "actual": 26.67,
+        "rf_pred": 29.36,
+        "xgb_pred": 30.23,
+        "rf_error": -2.69,
+        "xgb_error": -3.56,
+        "date": "2026-05-26"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.01,
+        "rf_error": 0.0,
+        "xgb_error": -0.01,
+        "date": "2026-05-26"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.01,
+        "rf_error": 0.0,
+        "xgb_error": 0.01,
+        "date": "2026-05-26"
+      },
+      {
+        "actual": 68.57,
+        "rf_pred": 74.24,
+        "xgb_pred": 77.84,
+        "rf_error": -5.67,
+        "xgb_error": -9.27,
+        "date": "2026-05-26"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.0,
+        "rf_error": 0.0,
+        "xgb_error": -0.0,
+        "date": "2026-05-26"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.0,
+        "rf_error": 0.0,
+        "xgb_error": 0.0,
+        "date": "2026-05-26"
+      },
+      {
+        "actual": 71.11,
+        "rf_pred": 53.43,
+        "xgb_pred": 58.05,
+        "rf_error": 17.68,
+        "xgb_error": 13.06,
+        "date": "2026-05-26"
+      },
+      {
+        "actual": 72.0,
+        "rf_pred": 74.31,
+        "xgb_pred": 75.21,
+        "rf_error": -2.31,
+        "xgb_error": -3.21,
+        "date": "2026-05-26"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.0,
+        "rf_error": 0.0,
+        "xgb_error": 0.0,
+        "date": "2026-05-26"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.07,
+        "rf_error": 0.0,
+        "xgb_error": 0.07,
+        "date": "2026-05-26"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.02,
+        "rf_error": 0.0,
+        "xgb_error": 0.02,
+        "date": "2026-05-26"
+      },
+      {
+        "actual": 57.5,
+        "rf_pred": 62.98,
+        "xgb_pred": 61.76,
+        "rf_error": -5.48,
+        "xgb_error": -4.26,
+        "date": "2026-05-26"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.0,
+        "rf_error": 0.0,
+        "xgb_error": 0.0,
+        "date": "2026-05-26"
+      },
+      {
+        "actual": 40.0,
+        "rf_pred": 34.2,
+        "xgb_pred": 34.36,
+        "rf_error": 5.8,
+        "xgb_error": 5.64,
+        "date": "2026-05-26"
+      },
+      {
+        "actual": 87.0,
+        "rf_pred": 91.0,
+        "xgb_pred": 90.13,
+        "rf_error": -4.0,
+        "xgb_error": -3.13,
+        "date": "2026-05-26"
+      },
+      {
+        "actual": 65.0,
+        "rf_pred": 77.54,
+        "xgb_pred": 77.19,
+        "rf_error": -12.54,
+        "xgb_error": -12.19,
+        "date": "2026-05-26"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.14,
+        "rf_error": 0.0,
+        "xgb_error": 0.14,
+        "date": "2026-05-26"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.04,
+        "rf_error": 0.0,
+        "xgb_error": -0.04,
+        "date": "2026-05-27"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.04,
+        "rf_error": 0.0,
+        "xgb_error": -0.04,
+        "date": "2026-05-27"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.02,
+        "rf_error": 0.0,
+        "xgb_error": -0.02,
+        "date": "2026-05-27"
+      },
+      {
+        "actual": 60.0,
+        "rf_pred": 51.26,
+        "xgb_pred": 50.51,
+        "rf_error": 8.74,
+        "xgb_error": 9.49,
+        "date": "2026-05-27"
+      },
+      {
+        "actual": 80.0,
+        "rf_pred": 71.18,
+        "xgb_pred": 67.36,
+        "rf_error": 8.82,
+        "xgb_error": 12.64,
+        "date": "2026-05-27"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.03,
+        "rf_error": 0.0,
+        "xgb_error": -0.03,
+        "date": "2026-05-27"
+      },
+      {
+        "actual": 61.43,
+        "rf_pred": 65.74,
+        "xgb_pred": 65.84,
+        "rf_error": -4.31,
+        "xgb_error": -4.41,
+        "date": "2026-05-27"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.05,
+        "rf_error": 0.0,
+        "xgb_error": 0.05,
+        "date": "2026-05-27"
+      },
+      {
+        "actual": 72.5,
+        "rf_pred": 67.11,
+        "xgb_pred": 68.3,
+        "rf_error": 5.39,
+        "xgb_error": 4.2,
+        "date": "2026-05-27"
+      },
+      {
+        "actual": 50.0,
+        "rf_pred": 48.1,
+        "xgb_pred": 46.37,
+        "rf_error": 1.9,
+        "xgb_error": 3.63,
+        "date": "2026-05-27"
+      },
+      {
+        "actual": 25.0,
+        "rf_pred": 29.4,
+        "xgb_pred": 27.92,
+        "rf_error": -4.4,
+        "xgb_error": -2.92,
+        "date": "2026-05-27"
+      },
+      {
+        "actual": 80.0,
+        "rf_pred": 78.39,
+        "xgb_pred": 80.18,
+        "rf_error": 1.61,
+        "xgb_error": -0.18,
+        "date": "2026-05-28"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.0,
+        "rf_error": 0.0,
+        "xgb_error": 0.0,
+        "date": "2026-05-28"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.04,
+        "rf_error": 0.0,
+        "xgb_error": 0.04,
+        "date": "2026-05-28"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.01,
+        "rf_error": 0.0,
+        "xgb_error": 0.01,
+        "date": "2026-05-28"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.05,
+        "rf_error": 0.0,
+        "xgb_error": 0.05,
+        "date": "2026-05-28"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.0,
+        "rf_error": 0.0,
+        "xgb_error": 0.0,
+        "date": "2026-05-28"
+      },
+      {
+        "actual": 55.0,
+        "rf_pred": 53.62,
+        "xgb_pred": 54.93,
+        "rf_error": 1.38,
+        "xgb_error": 0.07,
+        "date": "2026-05-28"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.07,
+        "rf_error": 0.0,
+        "xgb_error": 0.07,
+        "date": "2026-05-28"
+      },
+      {
+        "actual": 46.67,
+        "rf_pred": 40.83,
+        "xgb_pred": 40.03,
+        "rf_error": 5.84,
+        "xgb_error": 6.64,
+        "date": "2026-05-28"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.02,
+        "rf_error": 0.0,
+        "xgb_error": -0.02,
+        "date": "2026-05-29"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.03,
+        "rf_error": 0.0,
+        "xgb_error": -0.03,
+        "date": "2026-05-29"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.01,
+        "rf_error": 0.0,
+        "xgb_error": -0.01,
+        "date": "2026-05-29"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.01,
+        "rf_error": 0.0,
+        "xgb_error": 0.01,
+        "date": "2026-05-29"
+      },
+      {
+        "actual": 24.44,
+        "rf_pred": 29.93,
+        "xgb_pred": 28.04,
+        "rf_error": -5.49,
+        "xgb_error": -3.6,
+        "date": "2026-05-29"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.02,
+        "rf_error": 0.0,
+        "xgb_error": -0.02,
+        "date": "2026-05-29"
+      },
+      {
+        "actual": 58.33,
+        "rf_pred": 54.46,
+        "xgb_pred": 56.76,
+        "rf_error": 3.87,
+        "xgb_error": 1.57,
+        "date": "2026-05-29"
+      },
+      {
+        "actual": 80.0,
+        "rf_pred": 83.93,
+        "xgb_pred": 82.58,
+        "rf_error": -3.93,
+        "xgb_error": -2.58,
+        "date": "2026-05-29"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.12,
+        "rf_error": 0.0,
+        "xgb_error": -0.12,
+        "date": "2026-05-29"
+      },
+      {
+        "actual": 88.0,
+        "rf_pred": 92.07,
+        "xgb_pred": 92.64,
+        "rf_error": -4.07,
+        "xgb_error": -4.64,
+        "date": "2026-05-30"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.01,
+        "rf_error": 0.0,
+        "xgb_error": 0.01,
+        "date": "2026-05-30"
+      },
+      {
+        "actual": 30.0,
+        "rf_pred": 36.82,
+        "xgb_pred": 35.85,
+        "rf_error": -6.82,
+        "xgb_error": -5.85,
+        "date": "2026-05-30"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.03,
+        "rf_error": 0.0,
+        "xgb_error": 0.03,
+        "date": "2026-05-30"
+      },
+      {
+        "actual": 68.89,
+        "rf_pred": 75.2,
+        "xgb_pred": 78.22,
+        "rf_error": -6.31,
+        "xgb_error": -9.33,
+        "date": "2026-05-30"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.01,
+        "rf_error": 0.0,
+        "xgb_error": -0.01,
+        "date": "2026-05-30"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.05,
+        "rf_error": 0.0,
+        "xgb_error": -0.05,
+        "date": "2026-05-30"
+      },
+      {
+        "actual": 45.0,
+        "rf_pred": 42.72,
+        "xgb_pred": 43.37,
+        "rf_error": 2.28,
+        "xgb_error": 1.63,
+        "date": "2026-05-30"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.06,
+        "rf_error": 0.0,
+        "xgb_error": 0.06,
+        "date": "2026-05-30"
+      },
+      {
+        "actual": 56.67,
+        "rf_pred": 57.43,
+        "xgb_pred": 59.15,
+        "rf_error": -0.76,
+        "xgb_error": -2.48,
+        "date": "2026-05-30"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.11,
+        "rf_error": 0.0,
+        "xgb_error": -0.11,
+        "date": "2026-05-30"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.0,
+        "rf_error": 0.0,
+        "xgb_error": 0.0,
+        "date": "2026-05-30"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.02,
+        "rf_error": 0.0,
+        "xgb_error": 0.02,
+        "date": "2026-05-30"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.04,
+        "rf_error": 0.0,
+        "xgb_error": -0.04,
+        "date": "2026-05-30"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.06,
+        "rf_error": 0.0,
+        "xgb_error": -0.06,
+        "date": "2026-06-01"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.06,
+        "rf_error": 0.0,
+        "xgb_error": -0.06,
+        "date": "2026-06-01"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.07,
+        "rf_error": 0.0,
+        "xgb_error": -0.07,
+        "date": "2026-06-01"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.07,
+        "rf_error": 0.0,
+        "xgb_error": -0.07,
+        "date": "2026-06-01"
+      },
+      {
+        "actual": 56.0,
+        "rf_pred": 48.59,
+        "xgb_pred": 49.22,
+        "rf_error": 7.41,
+        "xgb_error": 6.78,
+        "date": "2026-06-01"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.08,
+        "rf_error": 0.0,
+        "xgb_error": -0.08,
+        "date": "2026-06-01"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.03,
+        "rf_error": 0.0,
+        "xgb_error": -0.03,
+        "date": "2026-06-01"
+      },
+      {
+        "actual": 50.0,
+        "rf_pred": 44.2,
+        "xgb_pred": 43.92,
+        "rf_error": 5.8,
+        "xgb_error": 6.08,
+        "date": "2026-06-01"
+      },
+      {
+        "actual": 82.86,
+        "rf_pred": 90.34,
+        "xgb_pred": 94.65,
+        "rf_error": -7.48,
+        "xgb_error": -11.79,
+        "date": "2026-06-01"
+      },
+      {
+        "actual": 48.0,
+        "rf_pred": 57.76,
+        "xgb_pred": 58.11,
+        "rf_error": -9.76,
+        "xgb_error": -10.11,
+        "date": "2026-06-01"
+      },
+      {
+        "actual": 63.75,
+        "rf_pred": 68.92,
+        "xgb_pred": 68.76,
+        "rf_error": -5.17,
+        "xgb_error": -5.01,
+        "date": "2026-06-01"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.03,
+        "rf_error": 0.0,
+        "xgb_error": -0.03,
+        "date": "2026-06-01"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.17,
+        "rf_error": 0.0,
+        "xgb_error": 0.17,
+        "date": "2026-06-01"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.04,
+        "rf_error": 0.0,
+        "xgb_error": 0.04,
+        "date": "2026-06-02"
+      },
+      {
+        "actual": 94.29,
+        "rf_pred": 89.51,
+        "xgb_pred": 92.07,
+        "rf_error": 4.78,
+        "xgb_error": 2.22,
+        "date": "2026-06-02"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.02,
+        "rf_error": 0.0,
+        "xgb_error": 0.02,
+        "date": "2026-06-02"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.0,
+        "rf_error": 0.0,
+        "xgb_error": -0.0,
+        "date": "2026-06-02"
+      },
+      {
+        "actual": 88.89,
+        "rf_pred": 78.43,
+        "xgb_pred": 73.31,
+        "rf_error": 10.46,
+        "xgb_error": 15.58,
+        "date": "2026-06-02"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.1,
+        "rf_error": 0.0,
+        "xgb_error": -0.1,
+        "date": "2026-06-02"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.03,
+        "rf_error": 0.0,
+        "xgb_error": 0.03,
+        "date": "2026-06-02"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.05,
+        "rf_error": 0.0,
+        "xgb_error": 0.05,
+        "date": "2026-06-02"
+      },
+      {
+        "actual": 40.0,
+        "rf_pred": 36.77,
+        "xgb_pred": 36.56,
+        "rf_error": 3.23,
+        "xgb_error": 3.44,
+        "date": "2026-06-02"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.03,
+        "rf_error": 0.0,
+        "xgb_error": 0.03,
+        "date": "2026-06-02"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.02,
+        "rf_error": 0.0,
+        "xgb_error": 0.02,
+        "date": "2026-06-02"
+      },
+      {
+        "actual": 20.0,
+        "rf_pred": 19.39,
+        "xgb_pred": 18.61,
+        "rf_error": 0.61,
+        "xgb_error": 1.39,
+        "date": "2026-06-02"
+      },
+      {
+        "actual": 56.25,
+        "rf_pred": 55.97,
+        "xgb_pred": 55.11,
+        "rf_error": 0.28,
+        "xgb_error": 1.14,
+        "date": "2026-06-02"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.06,
+        "rf_error": 0.0,
+        "xgb_error": -0.06,
+        "date": "2026-06-03"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.06,
+        "rf_error": 0.0,
+        "xgb_error": -0.06,
+        "date": "2026-06-03"
+      },
+      {
+        "actual": 90.0,
+        "rf_pred": 77.9,
+        "xgb_pred": 78.89,
+        "rf_error": 12.1,
+        "xgb_error": 11.11,
+        "date": "2026-06-03"
+      },
+      {
+        "actual": 21.43,
+        "rf_pred": 20.04,
+        "xgb_pred": 19.48,
+        "rf_error": 1.39,
+        "xgb_error": 1.95,
+        "date": "2026-06-03"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.01,
+        "rf_error": 0.0,
+        "xgb_error": 0.01,
+        "date": "2026-06-03"
+      },
+      {
+        "actual": 75.56,
+        "rf_pred": 73.94,
+        "xgb_pred": 74.35,
+        "rf_error": 1.62,
+        "xgb_error": 1.21,
+        "date": "2026-06-03"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.05,
+        "rf_error": 0.0,
+        "xgb_error": -0.05,
+        "date": "2026-06-03"
+      },
+      {
+        "actual": 75.0,
+        "rf_pred": 86.75,
+        "xgb_pred": 87.16,
+        "rf_error": -11.75,
+        "xgb_error": -12.16,
+        "date": "2026-06-03"
+      },
+      {
+        "actual": 52.5,
+        "rf_pred": 56.46,
+        "xgb_pred": 58.62,
+        "rf_error": -3.96,
+        "xgb_error": -6.12,
+        "date": "2026-06-03"
+      },
+      {
+        "actual": 87.5,
+        "rf_pred": 84.41,
+        "xgb_pred": 86.55,
+        "rf_error": 3.09,
+        "xgb_error": 0.95,
+        "date": "2026-06-03"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.09,
+        "rf_error": 0.0,
+        "xgb_error": -0.09,
+        "date": "2026-06-03"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.05,
+        "rf_error": 0.0,
+        "xgb_error": -0.05,
+        "date": "2026-06-03"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.05,
+        "rf_error": 0.0,
+        "xgb_error": -0.05,
+        "date": "2026-06-03"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.05,
+        "rf_error": 0.0,
+        "xgb_error": -0.05,
+        "date": "2026-06-03"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.04,
+        "rf_error": 0.0,
+        "xgb_error": -0.04,
+        "date": "2026-06-03"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.04,
+        "rf_error": 0.0,
+        "xgb_error": -0.04,
+        "date": "2026-06-03"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.02,
+        "rf_error": 0.0,
+        "xgb_error": -0.02,
+        "date": "2026-06-04"
+      },
+      {
+        "actual": 96.0,
+        "rf_pred": 92.96,
+        "xgb_pred": 91.71,
+        "rf_error": 3.04,
+        "xgb_error": 4.29,
+        "date": "2026-06-04"
+      },
+      {
+        "actual": 82.5,
+        "rf_pred": 78.07,
+        "xgb_pred": 74.17,
+        "rf_error": 4.43,
+        "xgb_error": 8.33,
+        "date": "2026-06-04"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.0,
+        "rf_error": 0.0,
+        "xgb_error": -0.0,
+        "date": "2026-06-04"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.01,
+        "rf_error": 0.0,
+        "xgb_error": 0.01,
+        "date": "2026-06-04"
+      },
+      {
+        "actual": 111.43,
+        "rf_pred": 94.35,
+        "xgb_pred": 92.6,
+        "rf_error": 17.08,
+        "xgb_error": 18.83,
+        "date": "2026-06-04"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.03,
+        "rf_error": 0.0,
+        "xgb_error": -0.03,
+        "date": "2026-06-04"
+      },
+      {
+        "actual": 72.0,
+        "rf_pred": 90.03,
+        "xgb_pred": 93.46,
+        "rf_error": -18.03,
+        "xgb_error": -21.46,
+        "date": "2026-06-04"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.03,
+        "rf_error": 0.0,
+        "xgb_error": 0.03,
+        "date": "2026-06-04"
+      },
+      {
+        "actual": 62.5,
+        "rf_pred": 60.4,
+        "xgb_pred": 57.27,
+        "rf_error": 2.1,
+        "xgb_error": 5.23,
+        "date": "2026-06-04"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.04,
+        "rf_error": 0.0,
+        "xgb_error": 0.04,
+        "date": "2026-06-04"
+      },
+      {
+        "actual": 70.0,
+        "rf_pred": 72.14,
+        "xgb_pred": 77.23,
+        "rf_error": -2.14,
+        "xgb_error": -7.23,
+        "date": "2026-06-04"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.03,
+        "rf_error": 0.0,
+        "xgb_error": 0.03,
+        "date": "2026-06-04"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.01,
+        "rf_error": 0.0,
+        "xgb_error": 0.01,
+        "date": "2026-06-04"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.02,
+        "rf_error": 0.0,
+        "xgb_error": -0.02,
+        "date": "2026-06-05"
+      },
+      {
+        "actual": 52.0,
+        "rf_pred": 65.3,
+        "xgb_pred": 65.76,
+        "rf_error": -13.3,
+        "xgb_error": -13.76,
+        "date": "2026-06-05"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.0,
+        "rf_error": 0.0,
+        "xgb_error": 0.0,
+        "date": "2026-06-05"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.01,
+        "rf_error": 0.0,
+        "xgb_error": 0.01,
+        "date": "2026-06-05"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.04,
+        "rf_error": 0.0,
+        "xgb_error": -0.04,
+        "date": "2026-06-05"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.07,
+        "rf_error": 0.0,
+        "xgb_error": -0.07,
+        "date": "2026-06-05"
+      },
+      {
+        "actual": 73.33,
+        "rf_pred": 66.92,
+        "xgb_pred": 65.14,
+        "rf_error": 6.41,
+        "xgb_error": 8.19,
+        "date": "2026-06-05"
+      },
+      {
+        "actual": 50.0,
+        "rf_pred": 50.2,
+        "xgb_pred": 46.08,
+        "rf_error": -0.2,
+        "xgb_error": 3.92,
+        "date": "2026-06-05"
+      },
+      {
+        "actual": 73.75,
+        "rf_pred": 75.92,
+        "xgb_pred": 73.22,
+        "rf_error": -2.17,
+        "xgb_error": 0.53,
+        "date": "2026-06-05"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.02,
+        "rf_error": 0.0,
+        "xgb_error": 0.02,
+        "date": "2026-06-06"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.03,
+        "rf_error": 0.0,
+        "xgb_error": -0.03,
+        "date": "2026-06-06"
+      },
+      {
+        "actual": 57.14,
+        "rf_pred": 46.4,
+        "xgb_pred": 48.3,
+        "rf_error": 10.74,
+        "xgb_error": 8.84,
+        "date": "2026-06-06"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.01,
+        "rf_error": 0.0,
+        "xgb_error": -0.01,
+        "date": "2026-06-06"
+      },
+      {
+        "actual": 75.56,
+        "rf_pred": 89.75,
+        "xgb_pred": 86.79,
+        "rf_error": -14.19,
+        "xgb_error": -11.23,
+        "date": "2026-06-06"
+      },
+      {
+        "actual": 56.0,
+        "rf_pred": 49.54,
+        "xgb_pred": 49.47,
+        "rf_error": 6.46,
+        "xgb_error": 6.53,
+        "date": "2026-06-06"
+      },
+      {
+        "actual": 80.0,
+        "rf_pred": 77.07,
+        "xgb_pred": 79.24,
+        "rf_error": 2.93,
+        "xgb_error": 0.76,
+        "date": "2026-06-06"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.01,
+        "rf_error": 0.0,
+        "xgb_error": 0.01,
+        "date": "2026-06-06"
+      },
+      {
+        "actual": 42.5,
+        "rf_pred": 38.56,
+        "xgb_pred": 41.29,
+        "rf_error": 3.94,
+        "xgb_error": 1.21,
+        "date": "2026-06-06"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.03,
+        "rf_error": 0.0,
+        "xgb_error": -0.03,
+        "date": "2026-06-08"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.05,
+        "rf_error": 0.0,
+        "xgb_error": -0.05,
+        "date": "2026-06-08"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.01,
+        "rf_error": 0.0,
+        "xgb_error": -0.01,
+        "date": "2026-06-08"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.02,
+        "rf_error": 0.0,
+        "xgb_error": -0.02,
+        "date": "2026-06-08"
+      },
+      {
+        "actual": 35.56,
+        "rf_pred": 41.14,
+        "xgb_pred": 41.08,
+        "rf_error": -5.58,
+        "xgb_error": -5.52,
+        "date": "2026-06-08"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.04,
+        "rf_error": 0.0,
+        "xgb_error": -0.04,
+        "date": "2026-06-08"
+      },
+      {
+        "actual": 57.78,
+        "rf_pred": 64.21,
+        "xgb_pred": 69.18,
+        "rf_error": -6.43,
+        "xgb_error": -11.4,
+        "date": "2026-06-08"
+      },
+      {
+        "actual": 51.43,
+        "rf_pred": 62.06,
+        "xgb_pred": 59.81,
+        "rf_error": -10.63,
+        "xgb_error": -8.38,
+        "date": "2026-06-08"
+      },
+      {
+        "actual": 92.0,
+        "rf_pred": 93.76,
+        "xgb_pred": 96.38,
+        "rf_error": -1.76,
+        "xgb_error": -4.38,
+        "date": "2026-06-08"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.01,
+        "rf_error": 0.0,
+        "xgb_error": 0.01,
+        "date": "2026-06-08"
+      },
+      {
+        "actual": 18.75,
+        "rf_pred": 16.81,
+        "xgb_pred": 17.9,
+        "rf_error": 1.94,
+        "xgb_error": 0.85,
+        "date": "2026-06-08"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.01,
+        "rf_error": 0.0,
+        "xgb_error": -0.01,
+        "date": "2026-06-08"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.02,
+        "rf_error": 0.0,
+        "xgb_error": -0.02,
+        "date": "2026-06-08"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.0,
+        "rf_error": 0.0,
+        "xgb_error": -0.0,
+        "date": "2026-06-08"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.03,
+        "rf_error": 0.0,
+        "xgb_error": -0.03,
+        "date": "2026-06-09"
+      },
+      {
+        "actual": 80.0,
+        "rf_pred": 69.09,
+        "xgb_pred": 68.23,
+        "rf_error": 10.91,
+        "xgb_error": 11.77,
+        "date": "2026-06-09"
+      },
+      {
+        "actual": 91.25,
+        "rf_pred": 73.42,
+        "xgb_pred": 75.53,
+        "rf_error": 17.83,
+        "xgb_error": 15.72,
+        "date": "2026-06-09"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.03,
+        "rf_error": 0.0,
+        "xgb_error": -0.03,
+        "date": "2026-06-09"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.05,
+        "rf_error": 0.0,
+        "xgb_error": -0.05,
+        "date": "2026-06-09"
+      },
+      {
+        "actual": 66.67,
+        "rf_pred": 66.74,
+        "xgb_pred": 66.8,
+        "rf_error": -0.07,
+        "xgb_error": -0.13,
+        "date": "2026-06-09"
+      },
+      {
+        "actual": 46.67,
+        "rf_pred": 50.88,
+        "xgb_pred": 50.68,
+        "rf_error": -4.21,
+        "xgb_error": -4.01,
+        "date": "2026-06-09"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.04,
+        "rf_error": 0.0,
+        "xgb_error": -0.04,
+        "date": "2026-06-09"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.01,
+        "rf_error": 0.0,
+        "xgb_error": -0.01,
+        "date": "2026-06-09"
+      },
+      {
+        "actual": 70.0,
+        "rf_pred": 83.14,
+        "xgb_pred": 81.63,
+        "rf_error": -13.14,
+        "xgb_error": -11.63,
+        "date": "2026-06-09"
+      },
+      {
+        "actual": 46.67,
+        "rf_pred": 41.72,
+        "xgb_pred": 42.37,
+        "rf_error": 4.95,
+        "xgb_error": 4.3,
+        "date": "2026-06-09"
+      },
+      {
+        "actual": 46.67,
+        "rf_pred": 46.51,
+        "xgb_pred": 45.77,
+        "rf_error": 0.16,
+        "xgb_error": 0.9,
+        "date": "2026-06-09"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.13,
+        "rf_error": 0.0,
+        "xgb_error": 0.13,
+        "date": "2026-06-09"
+      },
+      {
+        "actual": 95.0,
+        "rf_pred": 84.32,
+        "xgb_pred": 85.27,
+        "rf_error": 10.68,
+        "xgb_error": 9.73,
+        "date": "2026-06-09"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.0,
+        "rf_error": 0.0,
+        "xgb_error": -0.0,
+        "date": "2026-06-09"
+      },
+      {
+        "actual": 52.5,
+        "rf_pred": 57.16,
+        "xgb_pred": 61.47,
+        "rf_error": -4.66,
+        "xgb_error": -8.97,
+        "date": "2026-06-10"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.05,
+        "rf_error": 0.0,
+        "xgb_error": -0.05,
+        "date": "2026-06-10"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.06,
+        "rf_error": 0.0,
+        "xgb_error": -0.06,
+        "date": "2026-06-10"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.06,
+        "rf_error": 0.0,
+        "xgb_error": -0.06,
+        "date": "2026-06-10"
+      },
+      {
+        "actual": 62.0,
+        "rf_pred": 53.52,
+        "xgb_pred": 54.1,
+        "rf_error": 8.48,
+        "xgb_error": 7.9,
+        "date": "2026-06-10"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.05,
+        "rf_error": 0.0,
+        "xgb_error": -0.05,
+        "date": "2026-06-10"
+      },
+      {
+        "actual": 71.43,
+        "rf_pred": 61.68,
+        "xgb_pred": 62.14,
+        "rf_error": 9.75,
+        "xgb_error": 9.29,
+        "date": "2026-06-10"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.03,
+        "rf_error": 0.0,
+        "xgb_error": -0.03,
+        "date": "2026-06-10"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.06,
+        "rf_error": 0.0,
+        "xgb_error": -0.06,
+        "date": "2026-06-10"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.04,
+        "rf_error": 0.0,
+        "xgb_error": -0.04,
+        "date": "2026-06-10"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.02,
+        "rf_error": 0.0,
+        "xgb_error": -0.02,
+        "date": "2026-06-10"
+      },
+      {
+        "actual": 100.0,
+        "rf_pred": 91.4,
+        "xgb_pred": 91.93,
+        "rf_error": 8.6,
+        "xgb_error": 8.07,
+        "date": "2026-06-10"
+      },
+      {
+        "actual": 62.5,
+        "rf_pred": 74.93,
+        "xgb_pred": 73.15,
+        "rf_error": -12.43,
+        "xgb_error": -10.65,
+        "date": "2026-06-10"
+      },
+      {
+        "actual": 76.25,
+        "rf_pred": 70.92,
+        "xgb_pred": 68.31,
+        "rf_error": 5.33,
+        "xgb_error": 7.94,
+        "date": "2026-06-10"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.06,
+        "rf_error": 0.0,
+        "xgb_error": -0.06,
+        "date": "2026-06-10"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.04,
+        "rf_error": 0.0,
+        "xgb_error": -0.04,
+        "date": "2026-06-10"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.04,
+        "rf_error": 0.0,
+        "xgb_error": -0.04,
+        "date": "2026-06-10"
+      },
+      {
+        "actual": 78.75,
+        "rf_pred": 81.2,
+        "xgb_pred": 77.82,
+        "rf_error": -2.45,
+        "xgb_error": 0.93,
+        "date": "2026-06-10"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.06,
+        "rf_error": 0.0,
+        "xgb_error": -0.06,
+        "date": "2026-06-10"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.09,
+        "rf_error": 0.0,
+        "xgb_error": -0.09,
+        "date": "2026-06-10"
+      },
+      {
+        "actual": 83.75,
+        "rf_pred": 91.5,
+        "xgb_pred": 94.28,
+        "rf_error": -7.75,
+        "xgb_error": -10.53,
+        "date": "2026-06-10"
+      },
+      {
+        "actual": 47.0,
+        "rf_pred": 48.95,
+        "xgb_pred": 45.25,
+        "rf_error": -1.95,
+        "xgb_error": 1.75,
+        "date": "2026-06-10"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.01,
+        "rf_error": 0.0,
+        "xgb_error": 0.01,
+        "date": "2026-06-11"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.0,
+        "rf_error": 0.0,
+        "xgb_error": 0.0,
+        "date": "2026-06-11"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.01,
+        "rf_error": 0.0,
+        "xgb_error": 0.01,
+        "date": "2026-06-11"
+      },
+      {
+        "actual": 71.11,
+        "rf_pred": 60.59,
+        "xgb_pred": 65.17,
+        "rf_error": 10.52,
+        "xgb_error": 5.94,
+        "date": "2026-06-11"
+      },
+      {
+        "actual": 91.43,
+        "rf_pred": 87.18,
+        "xgb_pred": 84.14,
+        "rf_error": 4.25,
+        "xgb_error": 7.29,
+        "date": "2026-06-11"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.0,
+        "rf_error": 0.0,
+        "xgb_error": 0.0,
+        "date": "2026-06-11"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.01,
+        "rf_error": 0.0,
+        "xgb_error": -0.01,
+        "date": "2026-06-11"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.01,
+        "rf_error": 0.0,
+        "xgb_error": 0.01,
+        "date": "2026-06-11"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.01,
+        "rf_error": 0.0,
+        "xgb_error": 0.01,
+        "date": "2026-06-11"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.05,
+        "rf_error": 0.0,
+        "xgb_error": -0.05,
+        "date": "2026-06-11"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.01,
+        "rf_error": 0.0,
+        "xgb_error": 0.01,
+        "date": "2026-06-11"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.05,
+        "rf_error": 0.0,
+        "xgb_error": 0.05,
+        "date": "2026-06-11"
+      },
+      {
+        "actual": 105.0,
+        "rf_pred": 92.04,
+        "xgb_pred": 95.66,
+        "rf_error": 12.96,
+        "xgb_error": 9.34,
+        "date": "2026-06-11"
+      },
+      {
+        "actual": 72.86,
+        "rf_pred": 71.63,
+        "xgb_pred": 74.99,
+        "rf_error": 1.23,
+        "xgb_error": -2.13,
+        "date": "2026-06-11"
+      },
+      {
+        "actual": 68.89,
+        "rf_pred": 74.63,
+        "xgb_pred": 72.92,
+        "rf_error": -5.74,
+        "xgb_error": -4.03,
+        "date": "2026-06-12"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.01,
+        "rf_error": 0.0,
+        "xgb_error": -0.01,
+        "date": "2026-06-12"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.02,
+        "rf_error": 0.0,
+        "xgb_error": -0.02,
+        "date": "2026-06-12"
+      },
+      {
+        "actual": 102.5,
+        "rf_pred": 83.02,
+        "xgb_pred": 87.35,
+        "rf_error": 19.48,
+        "xgb_error": 15.15,
+        "date": "2026-06-12"
+      },
+      {
+        "actual": 45.0,
+        "rf_pred": 40.35,
+        "xgb_pred": 40.59,
+        "rf_error": 4.65,
+        "xgb_error": 4.41,
+        "date": "2026-06-12"
+      },
+      {
+        "actual": 63.33,
+        "rf_pred": 71.48,
+        "xgb_pred": 69.45,
+        "rf_error": -8.15,
+        "xgb_error": -6.12,
+        "date": "2026-06-12"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.02,
+        "rf_error": 0.0,
+        "xgb_error": 0.02,
+        "date": "2026-06-12"
+      },
+      {
+        "actual": 57.5,
+        "rf_pred": 58.54,
+        "xgb_pred": 57.5,
+        "rf_error": -1.04,
+        "xgb_error": -0.0,
+        "date": "2026-06-12"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.01,
+        "rf_error": 0.0,
+        "xgb_error": -0.01,
+        "date": "2026-06-12"
+      },
+      {
+        "actual": 48.89,
+        "rf_pred": 53.65,
+        "xgb_pred": 53.03,
+        "rf_error": -4.76,
+        "xgb_error": -4.14,
+        "date": "2026-06-13"
+      },
+      {
+        "actual": 31.11,
+        "rf_pred": 38.12,
+        "xgb_pred": 37.96,
+        "rf_error": -7.01,
+        "xgb_error": -6.85,
+        "date": "2026-06-13"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.0,
+        "rf_error": 0.0,
+        "xgb_error": -0.0,
+        "date": "2026-06-13"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.02,
+        "rf_error": 0.0,
+        "xgb_error": -0.02,
+        "date": "2026-06-13"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.0,
+        "rf_error": 0.0,
+        "xgb_error": -0.0,
+        "date": "2026-06-13"
+      },
+      {
+        "actual": 51.43,
+        "rf_pred": 50.53,
+        "xgb_pred": 49.32,
+        "rf_error": 0.9,
+        "xgb_error": 2.11,
+        "date": "2026-06-13"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.01,
+        "rf_error": 0.0,
+        "xgb_error": -0.01,
+        "date": "2026-06-13"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.01,
+        "rf_error": 0.0,
+        "xgb_error": -0.01,
+        "date": "2026-06-13"
+      },
+      {
+        "actual": 96.0,
+        "rf_pred": 95.12,
+        "xgb_pred": 97.87,
+        "rf_error": 0.88,
+        "xgb_error": -1.87,
+        "date": "2026-06-13"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.01,
+        "rf_error": 0.0,
+        "xgb_error": 0.01,
+        "date": "2026-06-13"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.01,
+        "rf_error": 0.0,
+        "xgb_error": 0.01,
+        "date": "2026-06-13"
+      },
+      {
+        "actual": 22.5,
+        "rf_pred": 25.76,
+        "xgb_pred": 26.17,
+        "rf_error": -3.26,
+        "xgb_error": -3.67,
+        "date": "2026-06-13"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.05,
+        "rf_error": 0.0,
+        "xgb_error": -0.05,
+        "date": "2026-06-13"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.01,
+        "rf_error": 0.0,
+        "xgb_error": 0.01,
+        "date": "2026-06-13"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.0,
+        "rf_error": 0.0,
+        "xgb_error": -0.0,
+        "date": "2026-06-13"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.0,
+        "rf_error": 0.0,
+        "xgb_error": 0.0,
+        "date": "2026-06-13"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.0,
+        "rf_error": 0.0,
+        "xgb_error": 0.0,
+        "date": "2026-06-13"
+      },
+      {
+        "actual": 76.0,
+        "rf_pred": 63.36,
+        "xgb_pred": 65.58,
+        "rf_error": 12.64,
+        "xgb_error": 10.42,
+        "date": "2026-06-15"
+      },
+      {
+        "actual": 26.67,
+        "rf_pred": 33.34,
+        "xgb_pred": 33.18,
+        "rf_error": -6.67,
+        "xgb_error": -6.51,
+        "date": "2026-06-15"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.02,
+        "rf_error": 0.0,
+        "xgb_error": -0.02,
+        "date": "2026-06-15"
+      },
+      {
+        "actual": 92.5,
+        "rf_pred": 97.89,
+        "xgb_pred": 95.55,
+        "rf_error": -5.39,
+        "xgb_error": -3.05,
+        "date": "2026-06-15"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.03,
+        "rf_error": 0.0,
+        "xgb_error": -0.03,
+        "date": "2026-06-15"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.03,
+        "rf_error": 0.0,
+        "xgb_error": -0.03,
+        "date": "2026-06-15"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.04,
+        "rf_error": 0.0,
+        "xgb_error": -0.04,
+        "date": "2026-06-15"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.02,
+        "rf_error": 0.0,
+        "xgb_error": -0.02,
+        "date": "2026-06-15"
+      },
+      {
+        "actual": 65.0,
+        "rf_pred": 72.23,
+        "xgb_pred": 70.56,
+        "rf_error": -7.23,
+        "xgb_error": -5.56,
+        "date": "2026-06-15"
+      },
+      {
+        "actual": 60.0,
+        "rf_pred": 61.44,
+        "xgb_pred": 57.73,
+        "rf_error": -1.44,
+        "xgb_error": 2.27,
+        "date": "2026-06-15"
+      },
+      {
+        "actual": 36.25,
+        "rf_pred": 36.39,
+        "xgb_pred": 35.86,
+        "rf_error": -0.14,
+        "xgb_error": 0.39,
+        "date": "2026-06-15"
+      },
+      {
+        "actual": 58.33,
+        "rf_pred": 66.6,
+        "xgb_pred": 65.8,
+        "rf_error": -8.27,
+        "xgb_error": -7.47,
+        "date": "2026-06-15"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.04,
+        "rf_error": 0.0,
+        "xgb_error": -0.04,
+        "date": "2026-06-15"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.02,
+        "rf_error": 0.0,
+        "xgb_error": -0.02,
+        "date": "2026-06-15"
+      },
+      {
+        "actual": 68.33,
+        "rf_pred": 63.32,
+        "xgb_pred": 65.15,
+        "rf_error": 5.01,
+        "xgb_error": 3.18,
+        "date": "2026-06-15"
+      },
+      {
+        "actual": 66.25,
+        "rf_pred": 69.32,
+        "xgb_pred": 66.96,
+        "rf_error": -3.07,
+        "xgb_error": -0.71,
+        "date": "2026-06-15"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.02,
+        "rf_error": 0.0,
+        "xgb_error": -0.02,
+        "date": "2026-06-16"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.02,
+        "rf_error": 0.0,
+        "xgb_error": -0.02,
+        "date": "2026-06-16"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.01,
+        "rf_error": 0.0,
+        "xgb_error": -0.01,
+        "date": "2026-06-16"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.06,
+        "rf_error": 0.0,
+        "xgb_error": -0.06,
+        "date": "2026-06-16"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.02,
+        "rf_error": 0.0,
+        "xgb_error": -0.02,
+        "date": "2026-06-16"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.0,
+        "rf_error": 0.0,
+        "xgb_error": -0.0,
+        "date": "2026-06-16"
+      },
+      {
+        "actual": 35.0,
+        "rf_pred": 36.14,
+        "xgb_pred": 36.06,
+        "rf_error": -1.14,
+        "xgb_error": -1.06,
+        "date": "2026-06-16"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.12,
+        "rf_error": 0.0,
+        "xgb_error": 0.12,
+        "date": "2026-06-16"
+      },
+      {
+        "actual": 43.0,
+        "rf_pred": 43.22,
+        "xgb_pred": 41.16,
+        "rf_error": -0.22,
+        "xgb_error": 1.84,
+        "date": "2026-06-16"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.12,
+        "rf_error": 0.0,
+        "xgb_error": 0.12,
+        "date": "2026-06-16"
+      },
+      {
+        "actual": 72.0,
+        "rf_pred": 62.42,
+        "xgb_pred": 61.2,
+        "rf_error": 9.58,
+        "xgb_error": 10.8,
+        "date": "2026-06-17"
+      },
+      {
+        "actual": 87.5,
+        "rf_pred": 98.49,
+        "xgb_pred": 98.12,
+        "rf_error": -10.99,
+        "xgb_error": -10.62,
+        "date": "2026-06-17"
+      },
+      {
+        "actual": 56.0,
+        "rf_pred": 53.86,
+        "xgb_pred": 53.73,
+        "rf_error": 2.14,
+        "xgb_error": 2.27,
+        "date": "2026-06-17"
+      },
+      {
+        "actual": 48.89,
+        "rf_pred": 54.43,
+        "xgb_pred": 52.99,
+        "rf_error": -5.54,
+        "xgb_error": -4.1,
+        "date": "2026-06-17"
+      },
+      {
+        "actual": 88.89,
+        "rf_pred": 92.35,
+        "xgb_pred": 90.78,
+        "rf_error": -3.46,
+        "xgb_error": -1.89,
+        "date": "2026-06-17"
+      },
+      {
+        "actual": 40.0,
+        "rf_pred": 37.21,
+        "xgb_pred": 39.13,
+        "rf_error": 2.79,
+        "xgb_error": 0.87,
+        "date": "2026-06-17"
+      },
+      {
+        "actual": 72.5,
+        "rf_pred": 62.12,
+        "xgb_pred": 60.73,
+        "rf_error": 10.38,
+        "xgb_error": 11.77,
+        "date": "2026-06-17"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.06,
+        "rf_error": 0.0,
+        "xgb_error": -0.06,
+        "date": "2026-06-17"
+      },
+      {
+        "actual": 51.0,
+        "rf_pred": 48.58,
+        "xgb_pred": 45.42,
+        "rf_error": 2.42,
+        "xgb_error": 5.58,
+        "date": "2026-06-17"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.05,
+        "rf_error": 0.0,
+        "xgb_error": -0.05,
+        "date": "2026-06-17"
+      },
+      {
+        "actual": 92.86,
+        "rf_pred": 89.25,
+        "xgb_pred": 92.39,
+        "rf_error": 3.61,
+        "xgb_error": 0.47,
+        "date": "2026-06-18"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.02,
+        "rf_error": 0.0,
+        "xgb_error": 0.02,
+        "date": "2026-06-18"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.04,
+        "rf_error": 0.0,
+        "xgb_error": 0.04,
+        "date": "2026-06-18"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.0,
+        "rf_error": 0.0,
+        "xgb_error": 0.0,
+        "date": "2026-06-18"
+      },
+      {
+        "actual": 35.0,
+        "rf_pred": 39.67,
+        "xgb_pred": 37.95,
+        "rf_error": -4.67,
+        "xgb_error": -2.95,
+        "date": "2026-06-18"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.06,
+        "rf_error": 0.0,
+        "xgb_error": -0.06,
+        "date": "2026-06-18"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.02,
+        "rf_error": 0.0,
+        "xgb_error": 0.02,
+        "date": "2026-06-18"
+      },
+      {
+        "actual": 13.75,
+        "rf_pred": 14.95,
+        "xgb_pred": 15.55,
+        "rf_error": -1.2,
+        "xgb_error": -1.8,
+        "date": "2026-06-18"
+      },
+      {
+        "actual": 45.0,
+        "rf_pred": 38.33,
+        "xgb_pred": 37.23,
+        "rf_error": 6.67,
+        "xgb_error": 7.77,
+        "date": "2026-06-18"
+      },
+      {
+        "actual": 47.5,
+        "rf_pred": 40.77,
+        "xgb_pred": 42.55,
+        "rf_error": 6.73,
+        "xgb_error": 4.95,
+        "date": "2026-06-18"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.13,
+        "rf_error": 0.0,
+        "xgb_error": 0.13,
+        "date": "2026-06-18"
+      },
+      {
+        "actual": 67.5,
+        "rf_pred": 51.82,
+        "xgb_pred": 54.88,
+        "rf_error": 15.68,
+        "xgb_error": 12.62,
+        "date": "2026-06-18"
+      },
+      {
+        "actual": 24.29,
+        "rf_pred": 25.95,
+        "xgb_pred": 25.39,
+        "rf_error": -1.66,
+        "xgb_error": -1.1,
+        "date": "2026-06-19"
+      },
+      {
+        "actual": 85.0,
+        "rf_pred": 96.77,
+        "xgb_pred": 96.45,
+        "rf_error": -11.77,
+        "xgb_error": -11.45,
+        "date": "2026-06-19"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.0,
+        "rf_error": 0.0,
+        "xgb_error": 0.0,
+        "date": "2026-06-19"
+      },
+      {
+        "actual": 73.33,
+        "rf_pred": 68.01,
+        "xgb_pred": 66.53,
+        "rf_error": 5.32,
+        "xgb_error": 6.8,
+        "date": "2026-06-19"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.01,
+        "rf_error": 0.0,
+        "xgb_error": -0.01,
+        "date": "2026-06-19"
+      },
+      {
+        "actual": 57.14,
+        "rf_pred": 69.54,
+        "xgb_pred": 68.89,
+        "rf_error": -12.4,
+        "xgb_error": -11.75,
+        "date": "2026-06-19"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.02,
+        "rf_error": 0.0,
+        "xgb_error": -0.02,
+        "date": "2026-06-19"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.02,
+        "rf_error": 0.0,
+        "xgb_error": -0.02,
+        "date": "2026-06-19"
+      },
+      {
+        "actual": 68.0,
+        "rf_pred": 70.28,
+        "xgb_pred": 75.97,
+        "rf_error": -2.28,
+        "xgb_error": -7.97,
+        "date": "2026-06-19"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.01,
+        "rf_error": 0.0,
+        "xgb_error": -0.01,
+        "date": "2026-06-19"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.05,
+        "rf_error": 0.0,
+        "xgb_error": -0.05,
+        "date": "2026-06-19"
+      },
+      {
+        "actual": 35.0,
+        "rf_pred": 33.31,
+        "xgb_pred": 33.26,
+        "rf_error": 1.69,
+        "xgb_error": 1.74,
+        "date": "2026-06-19"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.03,
+        "rf_error": 0.0,
+        "xgb_error": -0.03,
+        "date": "2026-06-19"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.02,
+        "rf_error": 0.0,
+        "xgb_error": 0.02,
+        "date": "2026-06-19"
+      },
+      {
+        "actual": 36.25,
+        "rf_pred": 33.36,
+        "xgb_pred": 34.36,
+        "rf_error": 2.89,
+        "xgb_error": 1.89,
+        "date": "2026-06-19"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.02,
+        "rf_error": 0.0,
+        "xgb_error": 0.02,
+        "date": "2026-06-20"
+      },
+      {
+        "actual": 16.25,
+        "rf_pred": 19.42,
+        "xgb_pred": 18.07,
+        "rf_error": -3.17,
+        "xgb_error": -1.82,
+        "date": "2026-06-20"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.03,
+        "rf_error": 0.0,
+        "xgb_error": -0.03,
+        "date": "2026-06-20"
+      },
+      {
+        "actual": 68.33,
+        "rf_pred": 73.21,
+        "xgb_pred": 75.69,
+        "rf_error": -4.88,
+        "xgb_error": -7.36,
+        "date": "2026-06-20"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.01,
+        "rf_error": 0.0,
+        "xgb_error": 0.01,
+        "date": "2026-06-20"
+      },
+      {
+        "actual": 31.0,
+        "rf_pred": 35.85,
+        "xgb_pred": 35.8,
+        "rf_error": -4.85,
+        "xgb_error": -4.8,
+        "date": "2026-06-20"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.04,
+        "rf_error": 0.0,
+        "xgb_error": -0.04,
+        "date": "2026-06-22"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.04,
+        "rf_error": 0.0,
+        "xgb_error": -0.04,
+        "date": "2026-06-22"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.07,
+        "rf_error": 0.0,
+        "xgb_error": -0.07,
+        "date": "2026-06-22"
+      },
+      {
+        "actual": 60.0,
+        "rf_pred": 63.65,
+        "xgb_pred": 67.16,
+        "rf_error": -3.65,
+        "xgb_error": -7.16,
+        "date": "2026-06-22"
+      },
+      {
+        "actual": 68.33,
+        "rf_pred": 80.46,
+        "xgb_pred": 84.25,
+        "rf_error": -12.13,
+        "xgb_error": -15.92,
+        "date": "2026-06-22"
+      },
+      {
+        "actual": 63.75,
+        "rf_pred": 54.02,
+        "xgb_pred": 55.53,
+        "rf_error": 9.73,
+        "xgb_error": 8.22,
+        "date": "2026-06-22"
+      },
+      {
+        "actual": 82.22,
+        "rf_pred": 73.04,
+        "xgb_pred": 72.3,
+        "rf_error": 9.18,
+        "xgb_error": 9.92,
+        "date": "2026-06-23"
+      },
+      {
+        "actual": 62.5,
+        "rf_pred": 53.4,
+        "xgb_pred": 53.19,
+        "rf_error": 9.1,
+        "xgb_error": 9.31,
+        "date": "2026-06-23"
+      },
+      {
+        "actual": 77.5,
+        "rf_pred": 84.61,
+        "xgb_pred": 84.79,
+        "rf_error": -7.11,
+        "xgb_error": -7.29,
+        "date": "2026-06-23"
+      },
+      {
+        "actual": 60.0,
+        "rf_pred": 62.52,
+        "xgb_pred": 63.8,
+        "rf_error": -2.52,
+        "xgb_error": -3.8,
+        "date": "2026-06-23"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.01,
+        "rf_error": 0.0,
+        "xgb_error": -0.01,
+        "date": "2026-06-23"
+      },
+      {
+        "actual": 60.0,
+        "rf_pred": 66.92,
+        "xgb_pred": 64.88,
+        "rf_error": -6.92,
+        "xgb_error": -4.88,
+        "date": "2026-06-23"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.02,
+        "rf_error": 0.0,
+        "xgb_error": -0.02,
+        "date": "2026-06-23"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.03,
+        "rf_error": 0.0,
+        "xgb_error": -0.03,
+        "date": "2026-06-23"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.03,
+        "rf_error": 0.0,
+        "xgb_error": -0.03,
+        "date": "2026-06-23"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.01,
+        "rf_error": 0.0,
+        "xgb_error": -0.01,
+        "date": "2026-06-23"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.01,
+        "rf_error": 0.0,
+        "xgb_error": -0.01,
+        "date": "2026-06-23"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.02,
+        "rf_error": 0.0,
+        "xgb_error": -0.02,
+        "date": "2026-06-23"
+      },
+      {
+        "actual": 84.0,
+        "rf_pred": 92.38,
+        "xgb_pred": 97.53,
+        "rf_error": -8.38,
+        "xgb_error": -13.53,
+        "date": "2026-06-23"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.02,
+        "rf_error": 0.0,
+        "xgb_error": -0.02,
+        "date": "2026-06-23"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.04,
+        "rf_error": 0.0,
+        "xgb_error": -0.04,
+        "date": "2026-06-23"
+      },
+      {
+        "actual": 47.5,
+        "rf_pred": 59.52,
+        "xgb_pred": 58.61,
+        "rf_error": -12.02,
+        "xgb_error": -11.11,
+        "date": "2026-06-23"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.03,
+        "rf_error": 0.0,
+        "xgb_error": -0.03,
+        "date": "2026-06-23"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.01,
+        "rf_error": 0.0,
+        "xgb_error": -0.01,
+        "date": "2026-06-23"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.12,
+        "rf_error": 0.0,
+        "xgb_error": 0.12,
+        "date": "2026-06-23"
+      },
+      {
+        "actual": 56.25,
+        "rf_pred": 68.73,
+        "xgb_pred": 69.65,
+        "rf_error": -12.48,
+        "xgb_error": -13.4,
+        "date": "2026-06-23"
+      },
+      {
+        "actual": 78.33,
+        "rf_pred": 66.4,
+        "xgb_pred": 67.1,
+        "rf_error": 11.93,
+        "xgb_error": 11.23,
+        "date": "2026-06-23"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.11,
+        "rf_error": 0.0,
+        "xgb_error": 0.11,
+        "date": "2026-06-23"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.05,
+        "rf_error": 0.0,
+        "xgb_error": -0.05,
+        "date": "2026-06-24"
+      },
+      {
+        "actual": 68.0,
+        "rf_pred": 66.56,
+        "xgb_pred": 70.01,
+        "rf_error": 1.44,
+        "xgb_error": -2.01,
+        "date": "2026-06-24"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.03,
+        "rf_error": 0.0,
+        "xgb_error": -0.03,
+        "date": "2026-06-24"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.03,
+        "rf_error": 0.0,
+        "xgb_error": -0.03,
+        "date": "2026-06-24"
+      },
+      {
+        "actual": 53.75,
+        "rf_pred": 43.95,
+        "xgb_pred": 44.54,
+        "rf_error": 9.8,
+        "xgb_error": 9.21,
+        "date": "2026-06-24"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.03,
+        "rf_error": 0.0,
+        "xgb_error": -0.03,
+        "date": "2026-06-24"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.02,
+        "rf_error": 0.0,
+        "xgb_error": -0.02,
+        "date": "2026-06-24"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.11,
+        "rf_error": 0.0,
+        "xgb_error": 0.11,
+        "date": "2026-06-24"
+      },
+      {
+        "actual": 91.11,
+        "rf_pred": 90.74,
+        "xgb_pred": 92.02,
+        "rf_error": 0.37,
+        "xgb_error": -0.91,
+        "date": "2026-06-25"
+      },
+      {
+        "actual": 60.0,
+        "rf_pred": 54.77,
+        "xgb_pred": 52.65,
+        "rf_error": 5.23,
+        "xgb_error": 7.35,
+        "date": "2026-06-25"
+      },
+      {
+        "actual": 78.57,
+        "rf_pred": 88.34,
+        "xgb_pred": 89.51,
+        "rf_error": -9.77,
+        "xgb_error": -10.94,
+        "date": "2026-06-25"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.01,
+        "rf_error": 0.0,
+        "xgb_error": 0.01,
+        "date": "2026-06-25"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.01,
+        "rf_error": 0.0,
+        "xgb_error": 0.01,
+        "date": "2026-06-25"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.02,
+        "rf_error": 0.0,
+        "xgb_error": 0.02,
+        "date": "2026-06-25"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.03,
+        "rf_error": 0.0,
+        "xgb_error": -0.03,
+        "date": "2026-06-25"
+      },
+      {
+        "actual": 57.14,
+        "rf_pred": 62.29,
+        "xgb_pred": 66.14,
+        "rf_error": -5.15,
+        "xgb_error": -9.0,
+        "date": "2026-06-25"
+      },
+      {
+        "actual": 74.29,
+        "rf_pred": 63.43,
+        "xgb_pred": 65.88,
+        "rf_error": 10.86,
+        "xgb_error": 8.41,
+        "date": "2026-06-25"
+      },
+      {
+        "actual": 37.5,
+        "rf_pred": 44.85,
+        "xgb_pred": 44.26,
+        "rf_error": -7.35,
+        "xgb_error": -6.76,
+        "date": "2026-06-25"
+      },
+      {
+        "actual": 57.5,
+        "rf_pred": 64.19,
+        "xgb_pred": 65.09,
+        "rf_error": -6.69,
+        "xgb_error": -7.59,
+        "date": "2026-06-25"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.03,
+        "rf_error": 0.0,
+        "xgb_error": 0.03,
+        "date": "2026-06-25"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.01,
+        "rf_error": 0.0,
+        "xgb_error": -0.01,
+        "date": "2026-06-25"
+      },
+      {
+        "actual": 42.5,
+        "rf_pred": 46.04,
+        "xgb_pred": 44.26,
+        "rf_error": -3.54,
+        "xgb_error": -1.76,
+        "date": "2026-06-25"
+      },
+      {
+        "actual": 85.0,
+        "rf_pred": 92.23,
+        "xgb_pred": 95.36,
+        "rf_error": -7.23,
+        "xgb_error": -10.36,
+        "date": "2026-06-25"
+      },
+      {
+        "actual": 21.67,
+        "rf_pred": 22.75,
+        "xgb_pred": 22.65,
+        "rf_error": -1.08,
+        "xgb_error": -0.98,
+        "date": "2026-06-25"
+      },
+      {
+        "actual": 98.33,
+        "rf_pred": 97.26,
+        "xgb_pred": 96.76,
+        "rf_error": 1.07,
+        "xgb_error": 1.57,
+        "date": "2026-06-25"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.15,
+        "rf_error": 0.0,
+        "xgb_error": 0.15,
+        "date": "2026-06-25"
+      },
+      {
+        "actual": 30.0,
+        "rf_pred": 26.88,
+        "xgb_pred": 26.87,
+        "rf_error": 3.12,
+        "xgb_error": 3.13,
+        "date": "2026-06-25"
+      },
+      {
+        "actual": 52.0,
+        "rf_pred": 70.24,
+        "xgb_pred": 67.79,
+        "rf_error": -18.24,
+        "xgb_error": -15.79,
+        "date": "2026-06-26"
+      },
+      {
+        "actual": 51.0,
+        "rf_pred": 57.28,
+        "xgb_pred": 59.52,
+        "rf_error": -6.28,
+        "xgb_error": -8.52,
+        "date": "2026-06-26"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.01,
+        "rf_error": 0.0,
+        "xgb_error": 0.01,
+        "date": "2026-06-26"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.0,
+        "rf_error": 0.0,
+        "xgb_error": -0.0,
+        "date": "2026-06-26"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.01,
+        "rf_error": 0.0,
+        "xgb_error": 0.01,
+        "date": "2026-06-26"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.02,
+        "rf_error": 0.0,
+        "xgb_error": -0.02,
+        "date": "2026-06-26"
+      },
+      {
+        "actual": 37.5,
+        "rf_pred": 31.88,
+        "xgb_pred": 34.09,
+        "rf_error": 5.62,
+        "xgb_error": 3.41,
+        "date": "2026-06-26"
+      },
+      {
+        "actual": 31.67,
+        "rf_pred": 37.54,
+        "xgb_pred": 38.34,
+        "rf_error": -5.87,
+        "xgb_error": -6.67,
+        "date": "2026-06-26"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.03,
+        "rf_error": 0.0,
+        "xgb_error": 0.03,
+        "date": "2026-06-26"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.02,
+        "rf_error": 0.0,
+        "xgb_error": 0.02,
+        "date": "2026-06-26"
+      },
+      {
+        "actual": 42.22,
+        "rf_pred": 51.52,
+        "xgb_pred": 49.08,
+        "rf_error": -9.3,
+        "xgb_error": -6.86,
+        "date": "2026-06-27"
+      },
+      {
+        "actual": 34.0,
+        "rf_pred": 28.91,
+        "xgb_pred": 28.4,
+        "rf_error": 5.09,
+        "xgb_error": 5.6,
+        "date": "2026-06-27"
+      },
+      {
+        "actual": 48.0,
+        "rf_pred": 56.0,
+        "xgb_pred": 53.73,
+        "rf_error": -8.0,
+        "xgb_error": -5.73,
+        "date": "2026-06-27"
+      },
+      {
+        "actual": 80.0,
+        "rf_pred": 79.75,
+        "xgb_pred": 80.11,
+        "rf_error": 0.25,
+        "xgb_error": -0.11,
+        "date": "2026-06-27"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.03,
+        "rf_error": 0.0,
+        "xgb_error": 0.03,
+        "date": "2026-06-27"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.05,
+        "rf_error": 0.0,
+        "xgb_error": 0.05,
+        "date": "2026-06-27"
+      },
+      {
+        "actual": 62.22,
+        "rf_pred": 66.16,
+        "xgb_pred": 67.82,
+        "rf_error": -3.94,
+        "xgb_error": -5.6,
+        "date": "2026-06-27"
+      },
+      {
+        "actual": 81.25,
+        "rf_pred": 64.18,
+        "xgb_pred": 67.36,
+        "rf_error": 17.07,
+        "xgb_error": 13.89,
+        "date": "2026-06-27"
+      },
+      {
+        "actual": 37.5,
+        "rf_pred": 39.82,
+        "xgb_pred": 40.84,
+        "rf_error": -2.32,
+        "xgb_error": -3.34,
+        "date": "2026-06-27"
+      },
+      {
+        "actual": 35.0,
+        "rf_pred": 35.53,
+        "xgb_pred": 37.7,
+        "rf_error": -0.53,
+        "xgb_error": -2.7,
+        "date": "2026-06-27"
+      },
+      {
+        "actual": 65.0,
+        "rf_pred": 55.46,
+        "xgb_pred": 55.53,
+        "rf_error": 9.54,
+        "xgb_error": 9.47,
+        "date": "2026-06-27"
+      },
+      {
+        "actual": 75.0,
+        "rf_pred": 84.26,
+        "xgb_pred": 79.23,
+        "rf_error": -9.26,
+        "xgb_error": -4.23,
+        "date": "2026-06-27"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.04,
+        "rf_error": 0.0,
+        "xgb_error": 0.04,
+        "date": "2026-06-27"
+      },
+      {
+        "actual": 45.71,
+        "rf_pred": 42.47,
+        "xgb_pred": 41.79,
+        "rf_error": 3.24,
+        "xgb_error": 3.92,
+        "date": "2026-06-27"
+      },
+      {
+        "actual": 41.25,
+        "rf_pred": 48.72,
+        "xgb_pred": 48.37,
+        "rf_error": -7.47,
+        "xgb_error": -7.12,
+        "date": "2026-06-27"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.03,
+        "rf_error": 0.0,
+        "xgb_error": 0.03,
+        "date": "2026-06-27"
+      },
+      {
+        "actual": 28.89,
+        "rf_pred": 26.59,
+        "xgb_pred": 26.98,
+        "rf_error": 2.3,
+        "xgb_error": 1.91,
+        "date": "2026-06-29"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.03,
+        "rf_error": 0.0,
+        "xgb_error": -0.03,
+        "date": "2026-06-29"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.04,
+        "rf_error": 0.0,
+        "xgb_error": -0.04,
+        "date": "2026-06-29"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.02,
+        "rf_error": 0.0,
+        "xgb_error": -0.02,
+        "date": "2026-06-29"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.04,
+        "rf_error": 0.0,
+        "xgb_error": -0.04,
+        "date": "2026-06-29"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.1,
+        "rf_error": 0.0,
+        "xgb_error": -0.1,
+        "date": "2026-06-29"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.04,
+        "rf_error": 0.0,
+        "xgb_error": -0.04,
+        "date": "2026-06-29"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.02,
+        "rf_error": 0.0,
+        "xgb_error": -0.02,
+        "date": "2026-06-29"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.1,
+        "rf_error": 0.0,
+        "xgb_error": 0.1,
+        "date": "2026-06-29"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.1,
+        "rf_error": 0.0,
+        "xgb_error": 0.1,
+        "date": "2026-06-29"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.01,
+        "rf_error": 0.0,
+        "xgb_error": -0.01,
+        "date": "2026-06-30"
+      },
+      {
+        "actual": 47.5,
+        "rf_pred": 49.01,
+        "xgb_pred": 50.87,
+        "rf_error": -1.51,
+        "xgb_error": -3.37,
+        "date": "2026-06-30"
+      },
+      {
+        "actual": 110.0,
+        "rf_pred": 90.85,
+        "xgb_pred": 89.52,
+        "rf_error": 19.15,
+        "xgb_error": 20.48,
+        "date": "2026-06-30"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.02,
+        "rf_error": 0.0,
+        "xgb_error": -0.02,
+        "date": "2026-06-30"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.03,
+        "rf_error": 0.0,
+        "xgb_error": -0.03,
+        "date": "2026-06-30"
+      },
+      {
+        "actual": 82.86,
+        "rf_pred": 72.25,
+        "xgb_pred": 76.11,
+        "rf_error": 10.61,
+        "xgb_error": 6.75,
+        "date": "2026-06-30"
+      },
+      {
+        "actual": 54.29,
+        "rf_pred": 49.89,
+        "xgb_pred": 53.42,
+        "rf_error": 4.4,
+        "xgb_error": 0.87,
+        "date": "2026-06-30"
+      },
+      {
+        "actual": 80.0,
+        "rf_pred": 81.31,
+        "xgb_pred": 83.39,
+        "rf_error": -1.31,
+        "xgb_error": -3.39,
+        "date": "2026-06-30"
+      },
+      {
+        "actual": 113.33,
+        "rf_pred": 94.91,
+        "xgb_pred": 96.28,
+        "rf_error": 18.42,
+        "xgb_error": 17.05,
+        "date": "2026-06-30"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": 0.09,
+        "rf_error": 0.0,
+        "xgb_error": -0.09,
+        "date": "2026-06-30"
+      },
+      {
+        "actual": 0.0,
+        "rf_pred": 0.0,
+        "xgb_pred": -0.04,
+        "rf_error": 0.0,
+        "xgb_error": 0.04,
+        "date": "2026-06-30"
+      },
+      {
+        "actual": 33.33,
+        "rf_pred": 33.73,
+        "xgb_pred": 35.8,
+        "rf_error": -0.4,
+        "xgb_error": -2.47,
+        "date": "2026-06-30"
+      }
+    ],
+    "error_histogram": [
+      {
+        "bin_label": "-30.0 to -27.5",
+        "bin_mid": -28.75,
+        "rf_count": 1,
+        "xgb_count": 0
+      },
+      {
+        "bin_label": "-27.5 to -25.0",
+        "bin_mid": -26.25,
+        "rf_count": 2,
+        "xgb_count": 1
+      },
+      {
+        "bin_label": "-25.0 to -22.5",
+        "bin_mid": -23.75,
+        "rf_count": 9,
+        "xgb_count": 4
+      },
+      {
+        "bin_label": "-22.5 to -20.0",
+        "bin_mid": -21.25,
+        "rf_count": 21,
+        "xgb_count": 17
+      },
+      {
+        "bin_label": "-20.0 to -17.5",
+        "bin_mid": -18.75,
+        "rf_count": 44,
+        "xgb_count": 51
+      },
+      {
+        "bin_label": "-17.5 to -15.0",
+        "bin_mid": -16.25,
+        "rf_count": 97,
+        "xgb_count": 92
+      },
+      {
+        "bin_label": "-15.0 to -12.5",
+        "bin_mid": -13.75,
+        "rf_count": 135,
+        "xgb_count": 143
+      },
+      {
+        "bin_label": "-12.5 to -10.0",
+        "bin_mid": -11.25,
+        "rf_count": 214,
+        "xgb_count": 216
+      },
+      {
+        "bin_label": "-10.0 to -7.5",
+        "bin_mid": -8.75,
+        "rf_count": 288,
+        "xgb_count": 318
+      },
+      {
+        "bin_label": "-7.5 to -5.0",
+        "bin_mid": -6.25,
+        "rf_count": 415,
+        "xgb_count": 422
+      },
+      {
+        "bin_label": "-5.0 to -2.5",
+        "bin_mid": -3.75,
+        "rf_count": 486,
+        "xgb_count": 482
+      },
+      {
+        "bin_label": "-2.5 to 0.0",
+        "bin_mid": -1.25,
+        "rf_count": 557,
+        "xgb_count": 3285
+      },
+      {
+        "bin_label": "0.0 to 2.5",
+        "bin_mid": 1.25,
+        "rf_count": 5058,
+        "xgb_count": 2345
+      },
+      {
+        "bin_label": "2.5 to 5.0",
+        "bin_mid": 3.75,
+        "rf_count": 496,
+        "xgb_count": 470
+      },
+      {
+        "bin_label": "5.0 to 7.5",
+        "bin_mid": 6.25,
+        "rf_count": 411,
+        "xgb_count": 391
+      },
+      {
+        "bin_label": "7.5 to 10.0",
+        "bin_mid": 8.75,
+        "rf_count": 280,
+        "xgb_count": 320
+      },
+      {
+        "bin_label": "10.0 to 12.5",
+        "bin_mid": 11.25,
+        "rf_count": 236,
+        "xgb_count": 231
+      },
+      {
+        "bin_label": "12.5 to 15.0",
+        "bin_mid": 13.75,
+        "rf_count": 149,
+        "xgb_count": 138
+      },
+      {
+        "bin_label": "15.0 to 17.5",
+        "bin_mid": 16.25,
+        "rf_count": 78,
+        "xgb_count": 70
+      },
+      {
+        "bin_label": "17.5 to 20.0",
+        "bin_mid": 18.75,
+        "rf_count": 56,
+        "xgb_count": 47
+      },
+      {
+        "bin_label": "20.0 to 22.5",
+        "bin_mid": 21.25,
+        "rf_count": 22,
+        "xgb_count": 22
+      },
+      {
+        "bin_label": "22.5 to 25.0",
+        "bin_mid": 23.75,
+        "rf_count": 11,
+        "xgb_count": 5
+      },
+      {
+        "bin_label": "25.0 to 27.5",
+        "bin_mid": 26.25,
+        "rf_count": 3,
+        "xgb_count": 2
+      },
+      {
+        "bin_label": "27.5 to 30.0",
+        "bin_mid": 28.75,
+        "rf_count": 3,
+        "xgb_count": 0
+      }
+    ],
+    "test_min": 0.0,
+    "test_max": 120.0,
+    "scheduled_test_count": 4498,
+    "unscheduled_test_count": 4574,
+    "scheduled_rf_mae": 6.7173,
+    "scheduled_xgb_mae": 6.6359
+  }
+}

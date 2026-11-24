@@ -1,0 +1,25 @@
+room_id,room_type,capacity,building,equipment
+C001,Classroom,40,Block C,Smart Board
+C002,Classroom,60,Block B,"Projector, Smart Board"
+C003,Classroom,40,Block C,Projector
+C004,Classroom,40,Block B,"Projector, Smart Board"
+C005,Classroom,80,Block C,"Projector, Smart Board"
+C006,Classroom,80,Block B,Projector
+C007,Classroom,100,Block B,Smart Board
+C008,Classroom,60,Block A,"Projector, Smart Board"
+C009,Classroom,80,Block B,Smart Board
+C010,Classroom,80,Block B,Smart Board
+C011,Classroom,60,Block A,Projector
+C012,Classroom,70,Block C,Projector
+C013,Classroom,100,Block C,Projector
+C014,Classroom,70,Block A,"Projector, Smart Board"
+L001,Laboratory,40,Block B,Computers
+L002,Laboratory,45,Block B,"Computers, Projector"
+L003,Laboratory,40,Block C,"Computers, Projector"
+L004,Laboratory,25,Block B,Electronics Kits
+L005,Laboratory,35,Block A,Electronics Kits
+L006,Laboratory,25,Block C,"Computers, Projector"
+L007,Laboratory,45,Block C,Electronics Kits
+L008,Laboratory,45,Block B,Computers
+L009,Laboratory,45,Block B,Computers
+L010,Laboratory,35,Block C,Computers
