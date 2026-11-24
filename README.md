@@ -8,8 +8,14 @@ Enterprise-style university analytics and ML forecasting dashboard built directl
 - `src/ml_pipeline.py`: Implements the notebook's 15-feature preprocessing pipeline (`ColumnTransformer` with `OneHotEncoder` + `SimpleImputer`), chronological 80:20 split, target leakage audit, `RandomForestRegressor`, and `XGBRegressor`.
 - `app.py` & `static/`: FastAPI backend serving REST endpoints and a dark-navy + crisp-white SaaS analytics frontend with Chart.js visualizations.
 
-## Run Locally
+## Run Locally (FastAPI)
 ```powershell
 python -m uvicorn app:app --host 127.0.0.1 --port 8050
 ```
 Then open `http://127.0.0.1:8050` in your browser.
+
+## Run / Deploy with Streamlit
+```powershell
+python -m streamlit run streamlit_app.py
+```
+For Streamlit Community Cloud, deploy `sarvesh-kumar-cse/ai-classroom-lab-dashboard` (`main` branch, main file `streamlit_app.py`).
